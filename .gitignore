@@ -3,6 +3,7 @@ __pycache__/
 *.pyo
 .idea
 .env
+.png
 venv/
 .DS_Store
 readme.txt
