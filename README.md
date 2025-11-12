@@ -31,3 +31,10 @@ UML-диаграмма классов отражает все ключевые �
 Swagger UI интегрирован в каждый сервис, предоставляя удобный веб-интерфейс 
 для просмотра и тестирования всех эндпоинтов. 
 ![swagger.png](media/swagger.png)
+
+## Quick Start
+1. Clone: `git clone https://github.com/...`
+2. Install: `pip install -r requirements.txt`
+3. Migrate: `python manage.py makemigrations && python manage.py migrate`
+4. Run: `python manage.py runserver`
+5. API docs: Visit `http://127.0.0.1:8000/api/`
