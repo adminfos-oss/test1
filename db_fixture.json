@@ -1,0 +1,238 @@
+[
+	{
+		"model": "main.shopuser",
+		"pk": 1,
+		"fields": {
+			"password": "pbkdf2_sha256$1000000$yXULCmZQiseECcqknOT1yG$pZkfLIdWgPmVnnNXmeCsBx2g9z7LkTR8BMGNU7M5hPE=",
+			"last_login": null,
+			"is_superuser": false,
+			"first_name": "",
+			"last_name": "",
+			"date_joined": "2025-10-21T12:15:33.977Z",
+			"username": "Maks",
+			"email": "maks@mail.com",
+			"is_active": true,
+			"is_staff": false,
+			"created_at": "2025-10-21T12:15:34.770Z",
+			"updated_at": "2025-10-21T12:15:34.776Z",
+			"groups": [],
+			"user_permissions": []
+		}
+	},
+	{
+		"model": "main.shopuser",
+		"pk": 4,
+		"fields": {
+			"password": "pbkdf2_sha256$1000000$sNWwZhjyrb4UfrAo3rDmkM$XdtyqU0xKo3nsdmNcOzqv/6+ocf1apS/CX6CUQontKI=",
+			"last_login": null,
+			"is_superuser": false,
+			"first_name": "",
+			"last_name": "",
+			"date_joined": "2025-10-22T15:39:57.199Z",
+			"username": "Борис",
+			"email": "bob@mn.com",
+			"is_active": true,
+			"is_staff": false,
+			"created_at": "2025-10-22T15:39:58.008Z",
+			"updated_at": "2025-10-22T15:39:58.011Z",
+			"groups": [],
+			"user_permissions": []
+		}
+	},
+	{
+		"model": "main.shopuser",
+		"pk": 5,
+		"fields": {
+			"password": "pbkdf2_sha256$1000000$PfOYwrUpbTnNJvNgbnBx4n$SMdHydXmcxOJD0M32r6opfomda2c94B/hgMN/qOAlLw=",
+			"last_login": "2025-10-30T12:39:50.931Z",
+			"is_superuser": true,
+			"first_name": "",
+			"last_name": "",
+			"date_joined": "2025-10-22T16:43:41.917Z",
+			"username": "admin",
+			"email": "email@py.com",
+			"is_active": true,
+			"is_staff": true,
+			"created_at": "2025-10-22T16:43:42.709Z",
+			"updated_at": "2025-10-22T16:43:42.709Z",
+			"groups": [],
+			"user_permissions": []
+		}
+	},
+	{
+		"model": "main.shopuser",
+		"pk": 6,
+		"fields": {
+			"password": "pbkdf2_sha256$1000000$IOLDCwqX8nMb7YLOafsCZR$bCcD/bk4CywV2V0gJYQyMWwDuvZQtkLrHevxArodbyY=",
+			"last_login": null,
+			"is_superuser": false,
+			"first_name": "",
+			"last_name": "",
+			"date_joined": "2025-10-23T14:27:28.054Z",
+			"username": "Test",
+			"email": "email",
+			"is_active": true,
+			"is_staff": false,
+			"created_at": "2025-10-23T14:27:28.845Z",
+			"updated_at": "2025-10-23T14:27:28.851Z",
+			"groups": [],
+			"user_permissions": []
+		}
+	},
+	{
+		"model": "main.shopuser",
+		"pk": 7,
+		"fields": {
+			"password": "pbkdf2_sha256$1000000$RcbYiIGEBRXWz1DdQQu1xb$BGLD+2+0XiNDFmw/H6iNu0Z+p6MXNXKPUiWvtcdnzu0=",
+			"last_login": null,
+			"is_superuser": false,
+			"first_name": "",
+			"last_name": "",
+			"date_joined": "2025-10-28T12:42:49.812Z",
+			"username": "Den",
+			"email": "den@abc.com",
+			"is_active": true,
+			"is_staff": false,
+			"created_at": "2025-10-28T12:42:50.631Z",
+			"updated_at": "2025-10-28T12:42:50.635Z",
+			"groups": [],
+			"user_permissions": []
+		}
+	},
+	{
+		"model": "main.shopuser",
+		"pk": 8,
+		"fields": {
+			"password": "pbkdf2_sha256$1000000$9NYvyYcv4KPVadkedq00FX$wtIaoC2pa22dvEerMo91YM88O5TWbP9ku2F9sW3mpX4=",
+			"last_login": null,
+			"is_superuser": false,
+			"first_name": "",
+			"last_name": "",
+			"date_joined": "2025-10-29T14:43:28.378Z",
+			"username": "Helen",
+			"email": "hel@hek.com",
+			"is_active": true,
+			"is_staff": false,
+			"created_at": "2025-10-29T14:43:29.165Z",
+			"updated_at": "2025-10-29T14:43:29.170Z",
+			"groups": [],
+			"user_permissions": []
+		}
+	},
+	{
+		"model": "main.shopuser",
+		"pk": 9,
+		"fields": {
+			"password": "pbkdf2_sha256$1000000$6Y2GZAWaHYlTzeOjNJnJFf$rYs6EwYyXEgNJs//sfzBLI8iTDJ4AGxwRotP0sBLv+s=",
+			"last_login": null,
+			"is_superuser": false,
+			"first_name": "",
+			"last_name": "",
+			"date_joined": "2025-10-29T14:47:20.856Z",
+			"username": "Vova",
+			"email": "vova@yar.ru",
+			"is_active": true,
+			"is_staff": false,
+			"created_at": "2025-10-29T14:47:21.649Z",
+			"updated_at": "2025-10-29T14:47:21.653Z",
+			"groups": [],
+			"user_permissions": []
+		}
+	},
+	{
+		"model": "products.product",
+		"pk": 6,
+		"fields": {
+			"name": "Яблоко",
+			"description": "Зеленое",
+			"price": "126.00",
+			"amount": 10,
+			"created_by": 1,
+			"created": "2025-10-31T11:34:49.569Z"
+		}
+	},
+	{
+		"model": "products.product",
+		"pk": 7,
+		"fields": {
+			"name": "Груша",
+			"description": "Жёлтая",
+			"price": "365.00",
+			"amount": 10,
+			"created_by": 1,
+			"created": "2025-10-31T11:35:22.668Z"
+		}
+	},
+	{
+		"model": "products.product",
+		"pk": 8,
+		"fields": {
+			"name": "Апельсин",
+			"description": "Красный",
+			"price": "1500.00",
+			"amount": 10,
+			"created_by": 1,
+			"created": "2025-10-31T11:36:02.932Z"
+		}
+	},
+	{
+		"model": "products.product",
+		"pk": 9,
+		"fields": {
+			"name": "Мандарин",
+			"description": "Оранжевый",
+			"price": "720.00",
+			"amount": 10,
+			"created_by": 1,
+			"created": "2025-10-31T11:36:34.900Z"
+		}
+	},
+	{
+		"model": "products.product",
+		"pk": 10,
+		"fields": {
+			"name": "Виноград",
+			"description": "Красный",
+			"price": "2690.00",
+			"amount": 10,
+			"created_by": 1,
+			"created": "2025-10-31T11:37:23.692Z"
+		}
+	},
+	{
+		"model": "products.product",
+		"pk": 11,
+		"fields": {
+			"name": "Слива",
+			"description": "Чёрная",
+			"price": "450.00",
+			"amount": 10,
+			"created_by": 1,
+			"created": "2025-10-31T11:37:43.530Z"
+		}
+	},
+	{
+		"model": "products.product",
+		"pk": 12,
+		"fields": {
+			"name": "Абрикос",
+			"description": "Белый",
+			"price": "658.00",
+			"amount": 10,
+			"created_by": 1,
+			"created": "2025-10-31T11:40:17.310Z"
+		}
+	},
+	{
+		"model": "products.product",
+		"pk": 13,
+		"fields": {
+			"name": "Персик",
+			"description": "Синий",
+			"price": "853.00",
+			"amount": 10,
+			"created_by": 1,
+			"created": "2025-10-31T11:40:56.342Z"
+		}
+	}
+]
