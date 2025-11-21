@@ -7,6 +7,15 @@
 * добавление продуктов в корзину, 
 * оформление заказов.
 
+## Особенности проекта
+
+- **Poetry** — управление зависимостями и виртуальным окружением
+- **Black** + **flake8** — автоматическое форматирование и линтинг
+- **pytest** + **pytest-django** — [покрытие тестами](#Pytest) models, views, serializers
+- **Логирование** через стандартный модуль `logging` 
+- **[Полная документация](docs/build/html/products.html#module-products.models)** сгенерирована через **Sphinx** 
+- Swagger UI и ReDoc для API-документации
+
 ## Архитектура проекта
 
 Функциональность разделена на отдельные независимые сервисы (микросервисы), 
@@ -41,9 +50,5 @@ Swagger UI интегрирован в каждый сервис, предост
 
 ![swagger.png](media/swagger.png)
 
-## Quick Start
-1. Clone: `git clone https://github.com/...`
-2. Install: `pip install -r requirements.txt`
-3. Migrate: `python manage.py makemigrations && python manage.py migrate`
-4. Run: `python manage.py runserver`
-5. API docs: `http://127.0.0.1:8000/swagger/`
+## Pytest
+![tests_passed.png](media/tests_passed.png)

@@ -1,0 +1,829 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>rest_framework.schemas.openapi &mdash; документация iShop 1.0.1</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=472891ee"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/translations.js?v=cd1d70c9"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            iShop
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">modules</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Индексы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../genindex.html">Алфавитный указатель</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../py-modindex.html">Состав модуля</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../search.html">Поиск</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">iShop</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Код модуля</a></li>
+      <li class="breadcrumb-item active">rest_framework.schemas.openapi</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Исходный код rest_framework.schemas.openapi</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">decimal</span><span class="w"> </span><span class="kn">import</span> <span class="n">Decimal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">attrgetter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">urllib.parse</span><span class="w"> </span><span class="kn">import</span> <span class="n">urljoin</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.core.validators</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DecimalValidator</span><span class="p">,</span> <span class="n">EmailValidator</span><span class="p">,</span> <span class="n">MaxLengthValidator</span><span class="p">,</span> <span class="n">MaxValueValidator</span><span class="p">,</span>
+    <span class="n">MinLengthValidator</span><span class="p">,</span> <span class="n">MinValueValidator</span><span class="p">,</span> <span class="n">RegexValidator</span><span class="p">,</span> <span class="n">URLValidator</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.utils.encoding</span><span class="w"> </span><span class="kn">import</span> <span class="n">force_str</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">rest_framework</span><span class="w"> </span><span class="kn">import</span> <span class="n">exceptions</span><span class="p">,</span> <span class="n">renderers</span><span class="p">,</span> <span class="n">serializers</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rest_framework.compat</span><span class="w"> </span><span class="kn">import</span> <span class="n">inflection</span><span class="p">,</span> <span class="n">uritemplate</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rest_framework.fields</span><span class="w"> </span><span class="kn">import</span> <span class="n">_UnvalidatedField</span><span class="p">,</span> <span class="n">empty</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rest_framework.settings</span><span class="w"> </span><span class="kn">import</span> <span class="n">api_settings</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.generators</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseSchemaGenerator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.inspectors</span><span class="w"> </span><span class="kn">import</span> <span class="n">ViewInspector</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_pk_description</span><span class="p">,</span> <span class="n">is_list_view</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">SchemaGenerator</span><span class="p">(</span><span class="n">BaseSchemaGenerator</span><span class="p">):</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Title and version are required by openapi specification 3.x</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">info</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span>
+
+        <span class="k">return</span> <span class="n">info</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_duplicate_operation_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paths</span><span class="p">):</span>
+        <span class="n">ids</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">route</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">[</span><span class="n">route</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="s1">&#39;operationId&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">[</span><span class="n">route</span><span class="p">][</span><span class="n">method</span><span class="p">]:</span>
+                    <span class="k">continue</span>
+                <span class="n">operation_id</span> <span class="o">=</span> <span class="n">paths</span><span class="p">[</span><span class="n">route</span><span class="p">][</span><span class="n">method</span><span class="p">][</span><span class="s1">&#39;operationId&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">operation_id</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">:</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                        <span class="s1">&#39;You have a duplicated operationId in your OpenAPI schema: </span><span class="si">{operation_id}</span><span class="se">\n</span><span class="s1">&#39;</span>
+                        <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Route: </span><span class="si">{route1}</span><span class="s1">, Method: </span><span class="si">{method1}</span><span class="se">\n</span><span class="s1">&#39;</span>
+                        <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Route: </span><span class="si">{route2}</span><span class="s1">, Method: </span><span class="si">{method2}</span><span class="se">\n</span><span class="s1">&#39;</span>
+                        <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">An operationId has to be unique across your schema. Your schema may not work in other tools.&#39;</span>
+                        <span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">route1</span><span class="o">=</span><span class="n">ids</span><span class="p">[</span><span class="n">operation_id</span><span class="p">][</span><span class="s1">&#39;route&#39;</span><span class="p">],</span>
+                            <span class="n">method1</span><span class="o">=</span><span class="n">ids</span><span class="p">[</span><span class="n">operation_id</span><span class="p">][</span><span class="s1">&#39;method&#39;</span><span class="p">],</span>
+                            <span class="n">route2</span><span class="o">=</span><span class="n">route</span><span class="p">,</span>
+                            <span class="n">method2</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+                            <span class="n">operation_id</span><span class="o">=</span><span class="n">operation_id</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="n">ids</span><span class="p">[</span><span class="n">operation_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;route&#39;</span><span class="p">:</span> <span class="n">route</span><span class="p">,</span>
+                    <span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="n">method</span>
+                <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_schema</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">public</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a OpenAPI schema.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initialise_endpoints</span><span class="p">()</span>
+        <span class="n">components_schemas</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Iterate endpoints generating per method path operations.</span>
+        <span class="n">paths</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">view_endpoints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_paths_and_endpoints</span><span class="p">(</span><span class="kc">None</span> <span class="k">if</span> <span class="n">public</span> <span class="k">else</span> <span class="n">request</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">view</span> <span class="ow">in</span> <span class="n">view_endpoints</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_view_permissions</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="n">operation</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">get_operation</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+            <span class="n">components</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">get_components</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">components</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">components_schemas</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="k">if</span> <span class="n">components_schemas</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="n">components</span><span class="p">[</span><span class="n">k</span><span class="p">]:</span>
+                    <span class="k">continue</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Schema component &quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">&quot; has been overridden with a different value.&#39;</span><span class="p">)</span>
+
+            <span class="n">components_schemas</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
+
+            <span class="c1"># Normalise path for any provided mount url.</span>
+            <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">):</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">urljoin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="ow">or</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+
+            <span class="n">paths</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="n">paths</span><span class="p">[</span><span class="n">path</span><span class="p">][</span><span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span> <span class="o">=</span> <span class="n">operation</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_duplicate_operation_id</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
+
+        <span class="c1"># Compile final schema.</span>
+        <span class="n">schema</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;openapi&#39;</span><span class="p">:</span> <span class="s1">&#39;3.0.2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;info&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_info</span><span class="p">(),</span>
+            <span class="s1">&#39;paths&#39;</span><span class="p">:</span> <span class="n">paths</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">components_schemas</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">schema</span><span class="p">[</span><span class="s1">&#39;components&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;schemas&#39;</span><span class="p">:</span> <span class="n">components_schemas</span>
+            <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">schema</span>
+
+<span class="c1"># View Inspectors</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">AutoSchema</span><span class="p">(</span><span class="n">ViewInspector</span><span class="p">):</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">operation_id_base</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">component_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param operation_id_base: user-defined name in operationId. If empty, it will be deducted from the Model/Serializer/View name.</span>
+<span class="sd">        :param component_name: user-defined component&#39;s name. If empty, it will be deducted from the Serializer&#39;s class name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">tags</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;tags must be a list or tuple of string.&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tags</span> <span class="o">=</span> <span class="n">tags</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">operation_id_base</span> <span class="o">=</span> <span class="n">operation_id_base</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">component_name</span> <span class="o">=</span> <span class="n">component_name</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+    <span class="n">request_media_types</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">response_media_types</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">method_mapping</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;get&#39;</span><span class="p">:</span> <span class="s1">&#39;retrieve&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;post&#39;</span><span class="p">:</span> <span class="s1">&#39;create&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;put&#39;</span><span class="p">:</span> <span class="s1">&#39;update&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;patch&#39;</span><span class="p">:</span> <span class="s1">&#39;partialUpdate&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;delete&#39;</span><span class="p">:</span> <span class="s1">&#39;destroy&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_operation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+        <span class="n">operation</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">operation</span><span class="p">[</span><span class="s1">&#39;operationId&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_operation_id</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+        <span class="n">operation</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_description</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+
+        <span class="n">parameters</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">parameters</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_path_parameters</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+        <span class="n">parameters</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_pagination_parameters</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+        <span class="n">parameters</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_filter_parameters</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+        <span class="n">operation</span><span class="p">[</span><span class="s1">&#39;parameters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span>
+
+        <span class="n">request_body</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_request_body</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">request_body</span><span class="p">:</span>
+            <span class="n">operation</span><span class="p">[</span><span class="s1">&#39;requestBody&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request_body</span>
+        <span class="n">operation</span><span class="p">[</span><span class="s1">&#39;responses&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_responses</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+        <span class="n">operation</span><span class="p">[</span><span class="s1">&#39;tags&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tags</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">operation</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_component_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">serializer</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the component&#39;s name from the serializer.</span>
+<span class="sd">        Raise an exception if the serializer&#39;s class name is &quot;Serializer&quot; (case-insensitive).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">component_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">component_name</span>
+
+        <span class="c1"># use the serializer&#39;s class name as the component name.</span>
+        <span class="n">component_name</span> <span class="o">=</span> <span class="n">serializer</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="c1"># We remove the &quot;serializer&quot; string from the class name.</span>
+        <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;serializer&quot;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+        <span class="n">component_name</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">component_name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">component_name</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s1">&#39;&quot;</span><span class="si">{}</span><span class="s1">&quot; is an invalid class name for schema generation. &#39;</span>
+                <span class="s1">&#39;Serializer</span><span class="se">\&#39;</span><span class="s1">s class name should be unique and explicit. e.g. &quot;ItemSerializer&quot;&#39;</span>
+                <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">serializer</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">component_name</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_components</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return components with their properties from the serializer.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;delete&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{}</span>
+
+        <span class="n">request_serializer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_request_serializer</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+        <span class="n">response_serializer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_response_serializer</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+
+        <span class="n">components</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">request_serializer</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">Serializer</span><span class="p">):</span>
+            <span class="n">component_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_component_name</span><span class="p">(</span><span class="n">request_serializer</span><span class="p">)</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_serializer</span><span class="p">(</span><span class="n">request_serializer</span><span class="p">)</span>
+            <span class="n">components</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">component_name</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">response_serializer</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">Serializer</span><span class="p">):</span>
+            <span class="n">component_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_component_name</span><span class="p">(</span><span class="n">response_serializer</span><span class="p">)</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_serializer</span><span class="p">(</span><span class="n">response_serializer</span><span class="p">)</span>
+            <span class="n">components</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">component_name</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">components</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_to_camel_case</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">snake_str</span><span class="p">):</span>
+        <span class="n">components</span> <span class="o">=</span> <span class="n">snake_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+        <span class="c1"># We capitalize the first letter of each component except the first one</span>
+        <span class="c1"># with the &#39;title&#39; method and join them together.</span>
+        <span class="k">return</span> <span class="n">components</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">title</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">components</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_operation_id_base</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute the base part for operation ID from the model, serializer or view name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="p">,</span> <span class="s1">&#39;queryset&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">operation_id_base</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">operation_id_base</span>
+
+        <span class="c1"># Try to deduce the ID from the view&#39;s model</span>
+        <span class="k">elif</span> <span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="vm">__name__</span>
+
+        <span class="c1"># Try with the serializer class name</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_serializer</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_serializer</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;Serializer&#39;</span><span class="p">):</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">[:</span><span class="o">-</span><span class="mi">10</span><span class="p">]</span>
+
+        <span class="c1"># Fallback to the view name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;APIView&#39;</span><span class="p">):</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">[:</span><span class="o">-</span><span class="mi">7</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;View&#39;</span><span class="p">):</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+
+            <span class="c1"># Due to camel-casing of classes and `action` being lowercase, apply title in order to find if action truly</span>
+            <span class="c1"># comes at the end of the name</span>
+            <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">title</span><span class="p">()):</span>  <span class="c1"># ListView, UpdateAPIView, ThingDelete ...</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">[:</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">action</span><span class="p">)]</span>
+
+        <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="s1">&#39;list&#39;</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">inflection</span><span class="p">,</span> <span class="s1">&#39;`inflection` must be installed for OpenAPI schema support.&#39;</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">inflection</span><span class="o">.</span><span class="n">pluralize</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">name</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_operation_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute an operation ID from the view type and get_operation_id_base method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">method_name</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="p">,</span> <span class="s1">&#39;action&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">is_list_view</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="p">):</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="s1">&#39;list&#39;</span>
+        <span class="k">elif</span> <span class="n">method_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">method_mapping</span><span class="p">:</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_camel_case</span><span class="p">(</span><span class="n">method_name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">method_mapping</span><span class="p">[</span><span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_operation_id_base</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">action</span> <span class="o">+</span> <span class="n">name</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_path_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a list of parameters from templated path variables.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">uritemplate</span><span class="p">,</span> <span class="s1">&#39;`uritemplate` must be installed for OpenAPI schema support.&#39;</span>
+
+        <span class="n">model</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="p">,</span> <span class="s1">&#39;queryset&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">variable</span> <span class="ow">in</span> <span class="n">uritemplate</span><span class="o">.</span><span class="n">variables</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># TODO: test this.</span>
+                <span class="c1"># Attempt to infer a field description if possible.</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">model_field</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">get_field</span><span class="p">(</span><span class="n">variable</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="n">model_field</span> <span class="o">=</span> <span class="kc">None</span>
+
+                <span class="k">if</span> <span class="n">model_field</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">model_field</span><span class="o">.</span><span class="n">help_text</span><span class="p">:</span>
+                    <span class="n">description</span> <span class="o">=</span> <span class="n">force_str</span><span class="p">(</span><span class="n">model_field</span><span class="o">.</span><span class="n">help_text</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">model_field</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">model_field</span><span class="o">.</span><span class="n">primary_key</span><span class="p">:</span>
+                    <span class="n">description</span> <span class="o">=</span> <span class="n">get_pk_description</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">model_field</span><span class="p">)</span>
+
+            <span class="n">parameter</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">variable</span><span class="p">,</span>
+                <span class="s2">&quot;in&quot;</span><span class="p">:</span> <span class="s2">&quot;path&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
+                <span class="s1">&#39;schema&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span>  <span class="c1"># TODO: integer, pattern, ...</span>
+                <span class="p">},</span>
+            <span class="p">}</span>
+            <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parameter</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">parameters</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_filter_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">allows_filters</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">filter_backend</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">filter_backends</span><span class="p">:</span>
+            <span class="n">parameters</span> <span class="o">+=</span> <span class="n">filter_backend</span><span class="p">()</span><span class="o">.</span><span class="n">get_schema_operation_parameters</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">parameters</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">allows_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determine whether to include filter Fields in schema.</span>
+
+<span class="sd">        Default implementation looks for ModelViewSet or GenericAPIView</span>
+<span class="sd">        actions/methods that cause filtering on the default implementation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="p">,</span> <span class="s1">&#39;filter_backends&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="p">,</span> <span class="s1">&#39;action&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">action</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;list&quot;</span><span class="p">,</span> <span class="s2">&quot;retrieve&quot;</span><span class="p">,</span> <span class="s2">&quot;update&quot;</span><span class="p">,</span> <span class="s2">&quot;partial_update&quot;</span><span class="p">,</span> <span class="s2">&quot;destroy&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;get&quot;</span><span class="p">,</span> <span class="s2">&quot;put&quot;</span><span class="p">,</span> <span class="s2">&quot;patch&quot;</span><span class="p">,</span> <span class="s2">&quot;delete&quot;</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_pagination_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+        <span class="n">view</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_list_view</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">view</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="n">paginator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_paginator</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">paginator</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="k">return</span> <span class="n">paginator</span><span class="o">.</span><span class="n">get_schema_operation_parameters</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">map_choicefield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
+        <span class="n">choices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">choices</span><span class="p">))</span>  <span class="c1"># preserve order and remove duplicates</span>
+        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">choice</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span> <span class="k">for</span> <span class="n">choice</span> <span class="ow">in</span> <span class="n">choices</span><span class="p">):</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="s1">&#39;boolean&#39;</span>
+        <span class="k">elif</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">choice</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">for</span> <span class="n">choice</span> <span class="ow">in</span> <span class="n">choices</span><span class="p">):</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="s1">&#39;integer&#39;</span>
+        <span class="k">elif</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">choice</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">Decimal</span><span class="p">))</span> <span class="k">for</span> <span class="n">choice</span> <span class="ow">in</span> <span class="n">choices</span><span class="p">):</span>  <span class="c1"># `number` includes `integer`</span>
+            <span class="c1"># Ref: https://tools.ietf.org/html/draft-wright-json-schema-validation-00#section-5.21</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="s1">&#39;number&#39;</span>
+        <span class="k">elif</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">choice</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">for</span> <span class="n">choice</span> <span class="ow">in</span> <span class="n">choices</span><span class="p">):</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="s1">&#39;string&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">type</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="c1"># The value of `enum` keyword MUST be an array and SHOULD be unique.</span>
+            <span class="c1"># Ref: https://tools.ietf.org/html/draft-wright-json-schema-validation-00#section-5.20</span>
+            <span class="s1">&#39;enum&#39;</span><span class="p">:</span> <span class="n">choices</span>
+        <span class="p">}</span>
+
+        <span class="c1"># If We figured out `type` then and only then we should set it. It must be a string.</span>
+        <span class="c1"># Ref: https://swagger.io/docs/specification/data-models/data-types/#mixed-type</span>
+        <span class="c1"># It is optional but it can not be null.</span>
+        <span class="c1"># Ref: https://tools.ietf.org/html/draft-wright-json-schema-validation-00#section-5.21</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">:</span>
+            <span class="n">mapping</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">type</span>
+        <span class="k">return</span> <span class="n">mapping</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">map_field</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
+
+        <span class="c1"># Nested Serializers, `many` or not.</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">ListSerializer</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_serializer</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">child</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">Serializer</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_serializer</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;object&#39;</span>
+            <span class="k">return</span> <span class="n">data</span>
+
+        <span class="c1"># Related fields.</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">ManyRelatedField</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_field</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">child_relation</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">PrimaryKeyRelatedField</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="s2">&quot;pk_field&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_field</span><span class="p">(</span><span class="n">field</span><span class="o">=</span><span class="n">field</span><span class="o">.</span><span class="n">pk_field</span><span class="p">)</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">queryset</span><span class="p">,</span> <span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">model_field</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">pk</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model_field</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">AutoField</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">}</span>
+
+        <span class="c1"># ChoiceFields (single and multiple).</span>
+        <span class="c1"># Q:</span>
+        <span class="c1"># - Is &#39;type&#39; required?</span>
+        <span class="c1"># - can we determine the TYPE of a choicefield?</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">MultipleChoiceField</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_choicefield</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+            <span class="p">}</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">ChoiceField</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_choicefield</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+
+        <span class="c1"># ListField.</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">ListField</span><span class="p">):</span>
+            <span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">child</span><span class="p">,</span> <span class="n">_UnvalidatedField</span><span class="p">):</span>
+                <span class="n">mapping</span><span class="p">[</span><span class="s1">&#39;items&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_field</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">child</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">mapping</span>
+
+        <span class="c1"># DateField and DateTimeField type is string</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">DateField</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;date&#39;</span><span class="p">,</span>
+            <span class="p">}</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;date-time&#39;</span><span class="p">,</span>
+            <span class="p">}</span>
+
+        <span class="c1"># &quot;Formats such as &quot;email&quot;, &quot;uuid&quot;, and so on, MAY be used even though undefined by this specification.&quot;</span>
+        <span class="c1"># see: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#data-types</span>
+        <span class="c1"># see also: https://swagger.io/docs/specification/data-models/data-types/#string</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">EmailField</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;email&#39;</span>
+            <span class="p">}</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">URLField</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;uri&#39;</span>
+            <span class="p">}</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">UUIDField</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;uuid&#39;</span>
+            <span class="p">}</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">IPAddressField</span><span class="p">):</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">protocol</span> <span class="o">!=</span> <span class="s1">&#39;both&#39;</span><span class="p">:</span>
+                <span class="n">content</span><span class="p">[</span><span class="s1">&#39;format&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">protocol</span>
+            <span class="k">return</span> <span class="n">content</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">DecimalField</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="s1">&#39;coerce_to_string&#39;</span><span class="p">,</span> <span class="n">api_settings</span><span class="o">.</span><span class="n">COERCE_DECIMAL_TO_STRING</span><span class="p">):</span>
+                <span class="n">content</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;decimal&#39;</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">content</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;number&#39;</span>
+                <span class="p">}</span>
+
+            <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">decimal_places</span><span class="p">:</span>
+                <span class="n">content</span><span class="p">[</span><span class="s1">&#39;multipleOf&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">decimal_places</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="s1">&#39;0&#39;</span> <span class="o">+</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">max_whole_digits</span><span class="p">:</span>
+                <span class="n">content</span><span class="p">[</span><span class="s1">&#39;maximum&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">max_whole_digits</span> <span class="o">*</span> <span class="s1">&#39;9&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">content</span><span class="p">[</span><span class="s1">&#39;minimum&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">content</span><span class="p">[</span><span class="s1">&#39;maximum&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_map_min_max</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">content</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">FloatField</span><span class="p">):</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;number&#39;</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_map_min_max</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">content</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">):</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span>
+            <span class="p">}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_map_min_max</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+            <span class="c1"># 2147483647 is max for int32_size, so we use int64 for format</span>
+            <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">content</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;maximum&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">2147483647</span> <span class="ow">or</span> <span class="nb">int</span><span class="p">(</span><span class="n">content</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;minimum&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">2147483647</span><span class="p">:</span>
+                <span class="n">content</span><span class="p">[</span><span class="s1">&#39;format&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;int64&#39;</span>
+            <span class="k">return</span> <span class="n">content</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">FileField</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;binary&#39;</span>
+            <span class="p">}</span>
+
+        <span class="c1"># Simplest cases, default to &#39;string&#39; type:</span>
+        <span class="n">FIELD_CLASS_SCHEMA_TYPE</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">serializers</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">:</span> <span class="s1">&#39;boolean&#39;</span><span class="p">,</span>
+            <span class="n">serializers</span><span class="o">.</span><span class="n">JSONField</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
+            <span class="n">serializers</span><span class="o">.</span><span class="n">DictField</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
+            <span class="n">serializers</span><span class="o">.</span><span class="n">HStoreField</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">FIELD_CLASS_SCHEMA_TYPE</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="s1">&#39;string&#39;</span><span class="p">)}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_map_min_max</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">max_value</span><span class="p">:</span>
+            <span class="n">content</span><span class="p">[</span><span class="s1">&#39;maximum&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">max_value</span>
+        <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">min_value</span><span class="p">:</span>
+            <span class="n">content</span><span class="p">[</span><span class="s1">&#39;minimum&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">min_value</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">map_serializer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">serializer</span><span class="p">):</span>
+        <span class="c1"># Assuming we have a valid serializer instance.</span>
+        <span class="n">required</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">properties</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">serializer</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">HiddenField</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">required</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">serializer</span><span class="o">.</span><span class="n">partial</span><span class="p">:</span>
+                <span class="n">required</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_field_name</span><span class="p">(</span><span class="n">field</span><span class="p">))</span>
+
+            <span class="n">schema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_field</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">read_only</span><span class="p">:</span>
+                <span class="n">schema</span><span class="p">[</span><span class="s1">&#39;readOnly&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">write_only</span><span class="p">:</span>
+                <span class="n">schema</span><span class="p">[</span><span class="s1">&#39;writeOnly&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">allow_null</span><span class="p">:</span>
+                <span class="n">schema</span><span class="p">[</span><span class="s1">&#39;nullable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">default</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">field</span><span class="o">.</span><span class="n">default</span> <span class="o">!=</span> <span class="n">empty</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">default</span><span class="p">):</span>
+                <span class="n">schema</span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">default</span>
+            <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">help_text</span><span class="p">:</span>
+                <span class="n">schema</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">help_text</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">map_field_validators</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
+
+            <span class="n">properties</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_field_name</span><span class="p">(</span><span class="n">field</span><span class="p">)]</span> <span class="o">=</span> <span class="n">schema</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="n">properties</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="n">required</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="s1">&#39;required&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">required</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">map_field_validators</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">schema</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        map field validators</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">field</span><span class="o">.</span><span class="n">validators</span><span class="p">:</span>
+            <span class="c1"># &quot;Formats such as &quot;email&quot;, &quot;uuid&quot;, and so on, MAY be used even though undefined by this specification.&quot;</span>
+            <span class="c1"># https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#data-types</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">EmailValidator</span><span class="p">):</span>
+                <span class="n">schema</span><span class="p">[</span><span class="s1">&#39;format&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;email&#39;</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">URLValidator</span><span class="p">):</span>
+                <span class="n">schema</span><span class="p">[</span><span class="s1">&#39;format&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;uri&#39;</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">RegexValidator</span><span class="p">):</span>
+                <span class="c1"># In Python, the token \Z does what \z does in other engines.</span>
+                <span class="c1"># https://stackoverflow.com/questions/53283160</span>
+                <span class="n">schema</span><span class="p">[</span><span class="s1">&#39;pattern&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">regex</span><span class="o">.</span><span class="n">pattern</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">Z&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">z&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">MaxLengthValidator</span><span class="p">):</span>
+                <span class="n">attr_name</span> <span class="o">=</span> <span class="s1">&#39;maxLength&#39;</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">ListField</span><span class="p">):</span>
+                    <span class="n">attr_name</span> <span class="o">=</span> <span class="s1">&#39;maxItems&#39;</span>
+                <span class="n">schema</span><span class="p">[</span><span class="n">attr_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">limit_value</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">MinLengthValidator</span><span class="p">):</span>
+                <span class="n">attr_name</span> <span class="o">=</span> <span class="s1">&#39;minLength&#39;</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">ListField</span><span class="p">):</span>
+                    <span class="n">attr_name</span> <span class="o">=</span> <span class="s1">&#39;minItems&#39;</span>
+                <span class="n">schema</span><span class="p">[</span><span class="n">attr_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">limit_value</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">MaxValueValidator</span><span class="p">):</span>
+                <span class="n">schema</span><span class="p">[</span><span class="s1">&#39;maximum&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">limit_value</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">MinValueValidator</span><span class="p">):</span>
+                <span class="n">schema</span><span class="p">[</span><span class="s1">&#39;minimum&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">limit_value</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">DecimalValidator</span><span class="p">)</span> <span class="ow">and</span> \
+                    <span class="ow">not</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="s1">&#39;coerce_to_string&#39;</span><span class="p">,</span> <span class="n">api_settings</span><span class="o">.</span><span class="n">COERCE_DECIMAL_TO_STRING</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">decimal_places</span><span class="p">:</span>
+                    <span class="n">schema</span><span class="p">[</span><span class="s1">&#39;multipleOf&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">decimal_places</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="s1">&#39;0&#39;</span> <span class="o">+</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">max_digits</span><span class="p">:</span>
+                    <span class="n">digits</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">max_digits</span>
+                    <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">decimal_places</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">v</span><span class="o">.</span><span class="n">decimal_places</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">digits</span> <span class="o">-=</span> <span class="n">v</span><span class="o">.</span><span class="n">decimal_places</span>
+                    <span class="n">schema</span><span class="p">[</span><span class="s1">&#39;maximum&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">digits</span> <span class="o">*</span> <span class="s1">&#39;9&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+                    <span class="n">schema</span><span class="p">[</span><span class="s1">&#39;minimum&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">schema</span><span class="p">[</span><span class="s1">&#39;maximum&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_field_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Override this method if you want to change schema field name.</span>
+<span class="sd">        For example, convert snake_case field name to camelCase.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">field</span><span class="o">.</span><span class="n">field_name</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_paginator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pagination_class</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="p">,</span> <span class="s1">&#39;pagination_class&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pagination_class</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pagination_class</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">map_parsers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">attrgetter</span><span class="p">(</span><span class="s1">&#39;media_type&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">parser_classes</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">map_renderers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+        <span class="n">media_types</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">renderer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">renderer_classes</span><span class="p">:</span>
+            <span class="c1"># BrowsableAPIRenderer not relevant to OpenAPI spec</span>
+            <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">renderer</span><span class="p">,</span> <span class="n">renderers</span><span class="o">.</span><span class="n">BrowsableAPIRenderer</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="n">media_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">renderer</span><span class="o">.</span><span class="n">media_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">media_types</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_serializer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+        <span class="n">view</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">view</span><span class="p">,</span> <span class="s1">&#39;get_serializer&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">view</span><span class="o">.</span><span class="n">get_serializer</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">APIException</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.get_serializer() raised an exception during &#39;</span>
+                          <span class="s1">&#39;schema generation. Serializer fields will not be &#39;</span>
+                          <span class="s1">&#39;generated for </span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1">.&#39;</span>
+                          <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">view</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">path</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_request_serializer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Override this method if your view uses a different serializer for</span>
+<span class="sd">        handling request body.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_serializer</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_response_serializer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Override this method if your view uses a different serializer for</span>
+<span class="sd">        populating response data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_serializer</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_reference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">serializer</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;$ref&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;#/components/schemas/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">get_component_name</span><span class="p">(</span><span class="n">serializer</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_request_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;PUT&#39;</span><span class="p">,</span> <span class="s1">&#39;PATCH&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">request_media_types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_parsers</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+
+        <span class="n">serializer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_request_serializer</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">serializer</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">Serializer</span><span class="p">):</span>
+            <span class="n">item_schema</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">item_schema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_reference</span><span class="p">(</span><span class="n">serializer</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="n">ct</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;schema&#39;</span><span class="p">:</span> <span class="n">item_schema</span><span class="p">}</span>
+                <span class="k">for</span> <span class="n">ct</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_media_types</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_responses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;DELETE&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="s1">&#39;204&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">response_media_types</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_renderers</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+
+        <span class="n">serializer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_response_serializer</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">serializer</span><span class="p">,</span> <span class="n">serializers</span><span class="o">.</span><span class="n">Serializer</span><span class="p">):</span>
+            <span class="n">item_schema</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">item_schema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_reference</span><span class="p">(</span><span class="n">serializer</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">is_list_view</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="p">):</span>
+            <span class="n">response_schema</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="n">item_schema</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="n">paginator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_paginator</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">paginator</span><span class="p">:</span>
+                <span class="n">response_schema</span> <span class="o">=</span> <span class="n">paginator</span><span class="o">.</span><span class="n">get_paginated_response_schema</span><span class="p">(</span><span class="n">response_schema</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">response_schema</span> <span class="o">=</span> <span class="n">item_schema</span>
+        <span class="n">status_code</span> <span class="o">=</span> <span class="s1">&#39;201&#39;</span> <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span> <span class="k">else</span> <span class="s1">&#39;200&#39;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="n">status_code</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="n">ct</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;schema&#39;</span><span class="p">:</span> <span class="n">response_schema</span><span class="p">}</span>
+                    <span class="k">for</span> <span class="n">ct</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">response_media_types</span>
+                <span class="p">},</span>
+                <span class="c1"># description is a mandatory property,</span>
+                <span class="c1"># https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#responseObject</span>
+                <span class="c1"># TODO: put something meaningful into it</span>
+                <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+        <span class="c1"># If user have specified tags, use them.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tags</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tags</span>
+
+        <span class="c1"># First element of a specific path could be valid tag. This is a fallback solution.</span>
+        <span class="c1"># PUT, PATCH, GET(Retrieve), DELETE:        /user_profile/{id}/       tags = [user-profile]</span>
+        <span class="c1"># POST, GET(List):                          /user_profile/            tags = [user-profile]</span>
+        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">):</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)]</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, Igor K.. </p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

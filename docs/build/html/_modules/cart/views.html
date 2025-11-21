@@ -1,0 +1,408 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cart.views &mdash; документация iShop 1.0.1</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=472891ee"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/translations.js?v=cd1d70c9"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            iShop
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">modules</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Индексы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../genindex.html">Алфавитный указатель</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../py-modindex.html">Состав модуля</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../search.html">Поиск</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">iShop</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Код модуля</a></li>
+      <li class="breadcrumb-item active">cart.views</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Исходный код cart.views</h1><div class="highlight"><pre>
+<span></span><span class="c1">#  cart/views.py</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">rest_framework</span><span class="w"> </span><span class="kn">import</span> <span class="n">viewsets</span><span class="p">,</span> <span class="n">status</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rest_framework.decorators</span><span class="w"> </span><span class="kn">import</span> <span class="n">action</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rest_framework.response</span><span class="w"> </span><span class="kn">import</span> <span class="n">Response</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_object_or_404</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.contrib.sessions.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Session</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">drf_yasg.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">swagger_auto_schema</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">drf_yasg</span><span class="w"> </span><span class="kn">import</span> <span class="n">openapi</span>  <span class="c1"># Для схем</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">transaction</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cart</span><span class="p">,</span> <span class="n">CartItem</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">orders.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Order</span><span class="p">,</span> <span class="n">OrderItem</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.serializers</span><span class="w"> </span><span class="kn">import</span> <span class="n">CartSerializer</span><span class="p">,</span> <span class="n">AddItemSerializer</span><span class="p">,</span> <span class="n">CheckoutSerializer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">orders.serializers</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrderSerializer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">products.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Product</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rest_framework_simplejwt.authentication</span><span class="w"> </span><span class="kn">import</span> <span class="n">JWTAuthentication</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rest_framework.permissions</span><span class="w"> </span><span class="kn">import</span> <span class="n">AllowAny</span><span class="p">,</span> <span class="n">IsAuthenticated</span>
+
+
+<div class="viewcode-block" id="CartViewSet">
+<a class="viewcode-back" href="../../cart.html#cart.views.CartViewSet">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CartViewSet</span><span class="p">(</span><span class="n">viewsets</span><span class="o">.</span><span class="n">ModelViewSet</span><span class="p">):</span>
+    <span class="n">queryset</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="n">serializer_class</span> <span class="o">=</span> <span class="n">CartSerializer</span>
+    <span class="n">authentication_classes</span> <span class="o">=</span> <span class="p">[</span><span class="n">JWTAuthentication</span><span class="p">]</span>
+    <span class="n">permission_classes</span> <span class="o">=</span> <span class="p">[</span><span class="n">IsAuthenticated</span><span class="p">]</span>
+
+    <span class="c1"># Динамические разрешения</span>
+<div class="viewcode-block" id="CartViewSet.get_permissions">
+<a class="viewcode-back" href="../../cart.html#cart.views.CartViewSet.get_permissions">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_permissions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Только list, add_item — публичные (AllowAny)</span>
+<span class="sd">        Все остальные действия только для авторизованных</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;list&quot;</span><span class="p">,</span> <span class="s2">&quot;add_item&quot;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">AllowAny</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">IsAuthenticated</span><span class="p">()]</span>  <span class="c1"># Всё остальное — только авторизованные</span></div>
+
+
+<div class="viewcode-block" id="CartViewSet.get_queryset">
+<a class="viewcode-back" href="../../cart.html#cart.views.CartViewSet.get_queryset">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Возвращает только корзину текущего пользователя или сессии</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">session_key</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+        <span class="n">session_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">session_key</span>
+
+        <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">user</span><span class="p">:</span>  <span class="c1"># Авторизован: только по user (с merge сессии в _attach)</span>
+            <span class="n">queryset</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># Аноним: ТОЛЬКО по сессии!</span>
+            <span class="n">queryset</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">session__session_key</span><span class="o">=</span><span class="n">session_key</span><span class="p">)</span>
+
+        <span class="c1"># Привязка/объединение (если авторизован)</span>
+        <span class="k">if</span> <span class="n">user</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_attach_cart_to_user</span><span class="p">(</span><span class="n">session_key</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">queryset</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_attach_cart_to_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session_key</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Привязывает анонимную корзину к пользователю и объединяет дубли</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">session_cart</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">session__session_key</span><span class="o">=</span><span class="n">session_key</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+        <span class="c1"># session_cart = Cart.objects.filter(session_key=session_key).first()</span>
+        <span class="n">user_cart</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">session__session_key__isnull</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+        <span class="c1"># user_cart = Cart.objects.filter(user=user, session_key__isnull=True).first()</span>
+
+        <span class="k">if</span> <span class="n">session_cart</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">session_cart</span><span class="o">.</span><span class="n">user</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">user_cart</span> <span class="ow">and</span> <span class="n">user_cart</span> <span class="o">!=</span> <span class="n">session_cart</span><span class="p">:</span>
+                <span class="c1"># Объединяем</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_merge_carts</span><span class="p">(</span><span class="n">session_cart</span><span class="p">,</span> <span class="n">user_cart</span><span class="p">)</span>
+                <span class="n">session_cart</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">session_cart</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">user</span>
+                <span class="n">session_cart</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_merge_carts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_cart</span><span class="p">,</span> <span class="n">to_cart</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Переносит товары из одной корзины в другую&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">from_cart</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="n">existing</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">to_cart</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">update_or_create</span><span class="p">(</span>
+                <span class="n">product</span><span class="o">=</span><span class="n">item</span><span class="o">.</span><span class="n">product</span><span class="p">,</span> <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;quantity&quot;</span><span class="p">:</span> <span class="n">item</span><span class="o">.</span><span class="n">quantity</span><span class="p">}</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">_</span><span class="p">:</span>
+                <span class="n">existing</span><span class="o">.</span><span class="n">quantity</span> <span class="o">+=</span> <span class="n">item</span><span class="o">.</span><span class="n">quantity</span>
+                <span class="n">existing</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+<div class="viewcode-block" id="CartViewSet.get_cart">
+<a class="viewcode-back" href="../../cart.html#cart.views.CartViewSet.get_cart">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_cart</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Возвращает текущую корзину (по сессии или пользователю)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">queryset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_queryset</span><span class="p">()</span>
+        <span class="n">cart</span> <span class="o">=</span> <span class="n">queryset</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">cart</span><span class="p">:</span>
+            <span class="c1"># Создаём новую</span>
+            <span class="n">session_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">session_key</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">session_key</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+                <span class="n">session_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">session_key</span>
+
+            <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">session_key</span><span class="o">=</span><span class="n">session_key</span><span class="p">)</span>
+
+            <span class="n">cart</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                <span class="n">session</span><span class="o">=</span><span class="n">session</span><span class="p">,</span>
+                <span class="n">user</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">cart</span></div>
+
+
+    <span class="c1"># === Действия ===</span>
+<div class="viewcode-block" id="CartViewSet.list">
+<a class="viewcode-back" href="../../cart.html#cart.views.CartViewSet.list">[документация]</a>
+    <span class="nd">@swagger_auto_schema</span><span class="p">(</span>
+        <span class="n">operation_summary</span><span class="o">=</span><span class="s2">&quot;Получить корзину&quot;</span><span class="p">,</span>
+        <span class="n">operation_description</span><span class="o">=</span><span class="s2">&quot;Возвращает корзину текущего пользователя&quot;</span><span class="p">,</span>
+        <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;3. Корзина&quot;</span><span class="p">],</span>  <span class="c1"># Опционально: тег для группировки</span>
+    <span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">cart</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cart</span><span class="p">()</span>
+        <span class="n">serializer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_serializer</span><span class="p">(</span><span class="n">cart</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;serializer.data: </span><span class="si">{</span><span class="n">serializer</span><span class="o">.</span><span class="n">data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">serializer</span><span class="o">.</span><span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CartViewSet.add_item">
+<a class="viewcode-back" href="../../cart.html#cart.views.CartViewSet.add_item">[документация]</a>
+    <span class="nd">@swagger_auto_schema</span><span class="p">(</span>
+        <span class="n">operation_summary</span><span class="o">=</span><span class="s2">&quot;Добавить товар в корзину&quot;</span><span class="p">,</span>
+        <span class="n">operation_description</span><span class="o">=</span><span class="s2">&quot;Добавляет или обновляет товар в корзине по product_id и quantity&quot;</span><span class="p">,</span>
+        <span class="n">request_body</span><span class="o">=</span><span class="n">AddItemSerializer</span><span class="p">,</span>  <span class="c1"># ← Body-параметры!</span>
+        <span class="n">responses</span><span class="o">=</span><span class="p">{</span>
+            <span class="mi">201</span><span class="p">:</span> <span class="n">CartSerializer</span><span class="p">,</span>  <span class="c1"># Успех: данные корзины</span>
+            <span class="mi">400</span><span class="p">:</span> <span class="n">openapi</span><span class="o">.</span><span class="n">Response</span><span class="p">(</span><span class="s2">&quot;Ошибка валидации&quot;</span><span class="p">,</span> <span class="n">AddItemSerializer</span><span class="p">),</span>  <span class="c1"># Ошибка</span>
+        <span class="p">},</span>
+        <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;3. Корзина&quot;</span><span class="p">],</span>  <span class="c1"># Опционально: тег для группировки</span>
+    <span class="p">)</span>
+    <span class="nd">@action</span><span class="p">(</span><span class="n">detail</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">])</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">cart</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cart</span><span class="p">()</span>
+        <span class="n">product_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;product_id&quot;</span><span class="p">)</span>
+        <span class="n">quantity</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;quantity&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">product_id</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;product_id is required&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">quantity</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;quantity must be positive&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+
+        <span class="n">product</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Product</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">product_id</span><span class="p">)</span>
+
+        <span class="n">cart_item</span><span class="p">,</span> <span class="n">created</span> <span class="o">=</span> <span class="n">CartItem</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">update_or_create</span><span class="p">(</span>
+            <span class="n">cart</span><span class="o">=</span><span class="n">cart</span><span class="p">,</span> <span class="n">product</span><span class="o">=</span><span class="n">product</span><span class="p">,</span> <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;quantity&quot;</span><span class="p">:</span> <span class="n">quantity</span><span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_serializer</span><span class="p">(</span><span class="n">cart</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">201</span> <span class="k">if</span> <span class="n">created</span> <span class="k">else</span> <span class="mi">200</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CartViewSet.remove_item">
+<a class="viewcode-back" href="../../cart.html#cart.views.CartViewSet.remove_item">[документация]</a>
+    <span class="nd">@swagger_auto_schema</span><span class="p">(</span>
+        <span class="n">operation_summary</span><span class="o">=</span><span class="s2">&quot;Удалить товар из корзины&quot;</span><span class="p">,</span>
+        <span class="n">operation_description</span><span class="o">=</span><span class="s2">&quot;Удаляет товар из корзины&quot;</span><span class="p">,</span>
+        <span class="n">request_body</span><span class="o">=</span><span class="n">AddItemSerializer</span><span class="p">,</span>  <span class="c1"># ← Body-параметры!</span>
+        <span class="n">responses</span><span class="o">=</span><span class="p">{</span>
+            <span class="mi">201</span><span class="p">:</span> <span class="n">CartSerializer</span><span class="p">,</span>  <span class="c1"># Успех: данные корзины</span>
+            <span class="mi">400</span><span class="p">:</span> <span class="n">openapi</span><span class="o">.</span><span class="n">Response</span><span class="p">(</span><span class="s2">&quot;Ошибка валидации&quot;</span><span class="p">,</span> <span class="n">AddItemSerializer</span><span class="p">),</span>  <span class="c1"># Ошибка</span>
+        <span class="p">},</span>
+        <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;3. Корзина&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="nd">@action</span><span class="p">(</span><span class="n">detail</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;delete&quot;</span><span class="p">])</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">cart</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cart</span><span class="p">()</span>
+        <span class="n">product_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;product_id&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">product_id</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;product_id is required&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+
+        <span class="n">product</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Product</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">product_id</span><span class="p">)</span>
+        <span class="n">deleted</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cart</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">product</span><span class="o">=</span><span class="n">product</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">deleted</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Item not in cart&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">404</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_serializer</span><span class="p">(</span><span class="n">cart</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CartViewSet.clear">
+<a class="viewcode-back" href="../../cart.html#cart.views.CartViewSet.clear">[документация]</a>
+    <span class="nd">@swagger_auto_schema</span><span class="p">(</span>
+        <span class="n">operation_summary</span><span class="o">=</span><span class="s2">&quot;Очистить корзину&quot;</span><span class="p">,</span>
+        <span class="n">operation_description</span><span class="o">=</span><span class="s2">&quot;Удаление всех товаров из корзины. &quot;</span><span class="p">,</span>
+        <span class="n">request_body</span><span class="o">=</span><span class="n">openapi</span><span class="o">.</span><span class="n">Schema</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="n">openapi</span><span class="o">.</span><span class="n">TYPE_OBJECT</span><span class="p">,</span>
+            <span class="n">properties</span><span class="o">=</span><span class="p">{},</span>  <span class="c1"># пустые свойства = пустое тело</span>
+            <span class="c1"># description=&quot;Этот эндпоинт не принимает тело запроса&quot;</span>
+        <span class="p">),</span>
+        <span class="n">responses</span><span class="o">=</span><span class="p">{</span>
+            <span class="mi">200</span><span class="p">:</span> <span class="n">CartSerializer</span><span class="p">,</span>  <span class="c1"># Успех: обновлённая корзина</span>
+            <span class="mi">401</span><span class="p">:</span> <span class="s2">&quot;Не авторизован&quot;</span><span class="p">,</span>
+            <span class="mi">404</span><span class="p">:</span> <span class="s2">&quot;Корзина не найдена&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;3. Корзина&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="nd">@action</span><span class="p">(</span><span class="n">detail</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;delete&quot;</span><span class="p">])</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="n">cart</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cart</span><span class="p">()</span>
+        <span class="n">cart</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_serializer</span><span class="p">(</span><span class="n">cart</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CartViewSet.checkout">
+<a class="viewcode-back" href="../../cart.html#cart.views.CartViewSet.checkout">[документация]</a>
+    <span class="nd">@swagger_auto_schema</span><span class="p">(</span>
+        <span class="n">operation_summary</span><span class="o">=</span><span class="s2">&quot;Оформить заказ&quot;</span><span class="p">,</span>
+        <span class="n">operation_description</span><span class="o">=</span><span class="s2">&quot;Оформление заказа на товары из корзины&quot;</span><span class="p">,</span>
+        <span class="n">request_body</span><span class="o">=</span><span class="n">CheckoutSerializer</span><span class="p">,</span>  <span class="c1"># ← Body-параметры!</span>
+        <span class="n">responses</span><span class="o">=</span><span class="p">{</span>
+            <span class="mi">201</span><span class="p">:</span> <span class="n">CheckoutSerializer</span><span class="p">,</span>
+            <span class="mi">400</span><span class="p">:</span> <span class="n">openapi</span><span class="o">.</span><span class="n">Response</span><span class="p">(</span><span class="s2">&quot;Ошибка валидации&quot;</span><span class="p">,</span> <span class="n">CheckoutSerializer</span><span class="p">),</span>  <span class="c1"># Ошибка</span>
+        <span class="p">},</span>
+        <span class="n">tags</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;3. Корзина&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="nd">@action</span><span class="p">(</span><span class="n">detail</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;post&quot;</span><span class="p">],</span> <span class="n">url_path</span><span class="o">=</span><span class="s2">&quot;checkout&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">checkout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+        <span class="n">cart</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">cart</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">cart</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Корзина пуста&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_400_BAD_REQUEST</span><span class="p">)</span>
+
+        <span class="n">serializer</span> <span class="o">=</span> <span class="n">CheckoutSerializer</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">serializer</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">serializer</span><span class="o">.</span><span class="n">errors</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_400_BAD_REQUEST</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">transaction</span><span class="o">.</span><span class="n">atomic</span><span class="p">():</span>
+            <span class="n">order</span> <span class="o">=</span> <span class="n">Order</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                <span class="n">user</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
+                <span class="n">shipping_address</span><span class="o">=</span><span class="n">serializer</span><span class="o">.</span><span class="n">validated_data</span><span class="p">[</span><span class="s2">&quot;shipping_address&quot;</span><span class="p">],</span>
+                <span class="n">phone</span><span class="o">=</span><span class="n">serializer</span><span class="o">.</span><span class="n">validated_data</span><span class="p">[</span><span class="s2">&quot;phone&quot;</span><span class="p">],</span>
+                <span class="n">comment</span><span class="o">=</span><span class="n">serializer</span><span class="o">.</span><span class="n">validated_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;comment&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+            <span class="p">)</span>
+
+            <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">cart</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">select_related</span><span class="p">(</span><span class="s2">&quot;product&quot;</span><span class="p">):</span>
+                <span class="n">OrderItem</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                    <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span>
+                    <span class="n">product</span><span class="o">=</span><span class="n">item</span><span class="o">.</span><span class="n">product</span><span class="p">,</span>
+                    <span class="n">quantity</span><span class="o">=</span><span class="n">item</span><span class="o">.</span><span class="n">quantity</span><span class="p">,</span>
+                    <span class="n">price_at_purchase</span><span class="o">=</span><span class="n">item</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">price</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">total</span> <span class="o">+=</span> <span class="n">item</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">price</span> <span class="o">*</span> <span class="n">item</span><span class="o">.</span><span class="n">quantity</span>
+
+            <span class="n">order</span><span class="o">.</span><span class="n">total_price</span> <span class="o">=</span> <span class="n">total</span>
+            <span class="n">order</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">update_fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;total_price&quot;</span><span class="p">])</span>
+
+            <span class="c1"># Очищаем корзину</span>
+            <span class="n">cart</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">OrderSerializer</span><span class="p">(</span><span class="n">order</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_201_CREATED</span><span class="p">)</span></div>
+
+
+    <span class="c1"># --- Скрываем от Сваггера ----</span>
+<div class="viewcode-block" id="CartViewSet.create">
+<a class="viewcode-back" href="../../cart.html#cart.views.CartViewSet.create">[документация]</a>
+    <span class="nd">@swagger_auto_schema</span><span class="p">(</span><span class="n">auto_schema</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="CartViewSet.update">
+<a class="viewcode-back" href="../../cart.html#cart.views.CartViewSet.update">[документация]</a>
+    <span class="nd">@swagger_auto_schema</span><span class="p">(</span><span class="n">auto_schema</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="CartViewSet.partial_update">
+<a class="viewcode-back" href="../../cart.html#cart.views.CartViewSet.partial_update">[документация]</a>
+    <span class="nd">@swagger_auto_schema</span><span class="p">(</span><span class="n">auto_schema</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">partial_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">MethodNotAllowed</span><span class="p">(</span><span class="s2">&quot;PATCH&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CartViewSet.destroy">
+<a class="viewcode-back" href="../../cart.html#cart.views.CartViewSet.destroy">[документация]</a>
+    <span class="nd">@swagger_auto_schema</span><span class="p">(</span><span class="n">auto_schema</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">MethodNotAllowed</span><span class="p">(</span><span class="s2">&quot;DELETE&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CartViewSet.retrieve">
+<a class="viewcode-back" href="../../cart.html#cart.views.CartViewSet.retrieve">[документация]</a>
+    <span class="nd">@swagger_auto_schema</span><span class="p">(</span><span class="n">auto_schema</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>  <span class="c1"># ← спрячет</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">retrieve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, Igor K.. </p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -11,23 +11,24 @@ class SignupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ShopUser
-        fields = ['username', 'email', 'password', 'password_confirm']
+        fields = ["username", "email", "password", "password_confirm"]
 
     def validate(self, attrs):
-        if attrs['password'] != attrs['password_confirm']:
+        if attrs["password"] != attrs["password_confirm"]:
             raise serializers.ValidationError("Пароли не совпадают")
-        if ShopUser.objects.filter(email=attrs['email']).exists():
+        if ShopUser.objects.filter(email=attrs["email"]).exists():
             raise serializers.ValidationError("Пользователь с таким email уже существует")
         return attrs
 
     def create(self, validated_data):
-        validated_data.pop('password_confirm', None)
+        validated_data.pop("password_confirm", None)
         user = ShopUser.objects.create_user(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            password=validated_data['password']
+            username=validated_data["username"],
+            email=validated_data["email"],
+            password=validated_data["password"],
         )
         return user
+
 
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
@@ -35,10 +36,10 @@ class LoginSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         user = authenticate(
-            username=attrs['email'],  # Поскольку USERNAME_FIELD = 'email'
-            password=attrs['password']
+            username=attrs["email"],  # Поскольку USERNAME_FIELD = 'email'
+            password=attrs["password"],
         )
         if not user or not user.is_active:
             raise serializers.ValidationError("Неверные учетные данные")
-        attrs['user'] = user
+        attrs["user"] = user
         return attrs

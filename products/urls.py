@@ -8,7 +8,9 @@ from .views import ProductViewSet
 
 # Создаём роутер (автоматически генерирует все CRUD-эндпоинты)
 router = DefaultRouter()
-router.register(r'products', ProductViewSet, basename='product')  # basename обязателен, если в модели нет queryset
+router.register(
+    r"products", ProductViewSet, basename="product"
+)  # basename обязателен, если в модели нет queryset
 
 urlpatterns = [
     # Подключаем все маршруты от роутера
@@ -18,5 +20,5 @@ urlpatterns = [
     # PUT    /products/<pk>/     → update
     # PATCH  /products/<pk>/     → partial_update
     # DELETE /products/<pk>/     → destroy
-    path('', include(router.urls)),
+    path("", include(router.urls)),
 ]

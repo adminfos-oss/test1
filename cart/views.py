@@ -16,6 +16,7 @@ from products.models import Product
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
+
 class CartViewSet(viewsets.ModelViewSet):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
@@ -28,7 +29,7 @@ class CartViewSet(viewsets.ModelViewSet):
         Только list, add_item — публичные (AllowAny)
         Все остальные действия только для авторизованных
         """
-        if self.action in ['list', 'add_item']:
+        if self.action in ["list", "add_item"]:
             return [AllowAny()]
         return [IsAuthenticated()]  # Всё остальное — только авторизованные
 
@@ -74,8 +75,7 @@ class CartViewSet(viewsets.ModelViewSet):
         """Переносит товары из одной корзины в другую"""
         for item in from_cart.items.all():
             existing, _ = to_cart.items.update_or_create(
-                product=item.product,
-                defaults={'quantity': item.quantity}
+                product=item.product, defaults={"quantity": item.quantity}
             )
             if not _:
                 existing.quantity += item.quantity
@@ -98,16 +98,15 @@ class CartViewSet(viewsets.ModelViewSet):
 
             cart = Cart.objects.create(
                 session=session,
-                user=self.request.user if self.request.user.is_authenticated else None
+                user=self.request.user if self.request.user.is_authenticated else None,
             )
         return cart
-
 
     # === Действия ===
     @swagger_auto_schema(
         operation_summary="Получить корзину",
         operation_description="Возвращает корзину текущего пользователя",
-        tags=['3. Корзина'],  # Опционально: тег для группировки
+        tags=["3. Корзина"],  # Опционально: тег для группировки
     )
     def list(self, request, *args, **kwargs):
         cart = self.get_cart()
@@ -121,15 +120,15 @@ class CartViewSet(viewsets.ModelViewSet):
         request_body=AddItemSerializer,  # ← Body-параметры!
         responses={
             201: CartSerializer,  # Успех: данные корзины
-            400: openapi.Response('Ошибка валидации', AddItemSerializer), # Ошибка
+            400: openapi.Response("Ошибка валидации", AddItemSerializer),  # Ошибка
         },
-        tags=['3. Корзина'],  # Опционально: тег для группировки
+        tags=["3. Корзина"],  # Опционально: тег для группировки
     )
-    @action(detail=False, methods=['post'])
+    @action(detail=False, methods=["post"])
     def add_item(self, request, *args, **kwargs):
         cart = self.get_cart()
-        product_id = request.data.get('product_id')
-        quantity = int(request.data.get('quantity', 1))
+        product_id = request.data.get("product_id")
+        quantity = int(request.data.get("quantity", 1))
 
         if not product_id:
             return Response({"error": "product_id is required"}, status=400)
@@ -140,13 +139,10 @@ class CartViewSet(viewsets.ModelViewSet):
         product = get_object_or_404(Product, id=product_id)
 
         cart_item, created = CartItem.objects.update_or_create(
-            cart=cart,
-            product=product,
-            defaults={'quantity': quantity}
+            cart=cart, product=product, defaults={"quantity": quantity}
         )
 
         return Response(self.get_serializer(cart).data, status=201 if created else 200)
-
 
     @swagger_auto_schema(
         operation_summary="Удалить товар из корзины",
@@ -154,14 +150,14 @@ class CartViewSet(viewsets.ModelViewSet):
         request_body=AddItemSerializer,  # ← Body-параметры!
         responses={
             201: CartSerializer,  # Успех: данные корзины
-            400: openapi.Response('Ошибка валидации', AddItemSerializer),  # Ошибка
+            400: openapi.Response("Ошибка валидации", AddItemSerializer),  # Ошибка
         },
-        tags=['3. Корзина'],
+        tags=["3. Корзина"],
     )
-    @action(detail=False, methods=['delete'])
+    @action(detail=False, methods=["delete"])
     def remove_item(self, request, *args, **kwargs):
         cart = self.get_cart()
-        product_id = request.data.get('product_id')
+        product_id = request.data.get("product_id")
         if not product_id:
             return Response({"error": "product_id is required"}, status=400)
 
@@ -182,17 +178,16 @@ class CartViewSet(viewsets.ModelViewSet):
         ),
         responses={
             200: CartSerializer,  # Успех: обновлённая корзина
-            401: 'Не авторизован',
-            404: 'Корзина не найдена',
+            401: "Не авторизован",
+            404: "Корзина не найдена",
         },
-        tags=['3. Корзина'],
+        tags=["3. Корзина"],
     )
-    @action(detail=False, methods=['delete'])
+    @action(detail=False, methods=["delete"])
     def clear(self, request):
         cart = self.get_cart()
         cart.items.all().delete()
         return Response(self.get_serializer(cart).data)
-
 
     @swagger_auto_schema(
         operation_summary="Оформить заказ",
@@ -200,11 +195,11 @@ class CartViewSet(viewsets.ModelViewSet):
         request_body=CheckoutSerializer,  # ← Body-параметры!
         responses={
             201: CheckoutSerializer,
-            400: openapi.Response('Ошибка валидации', CheckoutSerializer),  # Ошибка
+            400: openapi.Response("Ошибка валидации", CheckoutSerializer),  # Ошибка
         },
-        tags=['3. Корзина'],
+        tags=["3. Корзина"],
     )
-    @action(detail=False, methods=['post'], url_path='checkout')
+    @action(detail=False, methods=["post"], url_path="checkout")
     def checkout(self, request):
         cart = request.user.cart
 
@@ -218,13 +213,13 @@ class CartViewSet(viewsets.ModelViewSet):
         with transaction.atomic():
             order = Order.objects.create(
                 user=request.user,
-                shipping_address=serializer.validated_data['shipping_address'],
-                phone=serializer.validated_data['phone'],
-                comment=serializer.validated_data.get('comment', ''),
+                shipping_address=serializer.validated_data["shipping_address"],
+                phone=serializer.validated_data["phone"],
+                comment=serializer.validated_data.get("comment", ""),
             )
 
             total = 0
-            for item in cart.items.select_related('product'):
+            for item in cart.items.select_related("product"):
                 OrderItem.objects.create(
                     order=order,
                     product=item.product,
@@ -234,16 +229,14 @@ class CartViewSet(viewsets.ModelViewSet):
                 total += item.product.price * item.quantity
 
             order.total_price = total
-            order.save(update_fields=['total_price'])
+            order.save(update_fields=["total_price"])
 
             # Очищаем корзину
             cart.items.all().delete()
 
         return Response(OrderSerializer(order).data, status=status.HTTP_201_CREATED)
 
-
-
-   # --- Скрываем от Сваггера ----
+    # --- Скрываем от Сваггера ----
     @swagger_auto_schema(auto_schema=None)
     def create(self, request, *args, **kwargs):
         pass
@@ -254,11 +247,11 @@ class CartViewSet(viewsets.ModelViewSet):
 
     @swagger_auto_schema(auto_schema=None)
     def partial_update(self, request, *args, **kwargs):
-        raise MethodNotAllowed('PATCH')
+        raise MethodNotAllowed("PATCH")
 
     @swagger_auto_schema(auto_schema=None)
     def destroy(self, request, *args, **kwargs):
-        raise MethodNotAllowed('DELETE')
+        raise MethodNotAllowed("DELETE")
 
     @swagger_auto_schema(auto_schema=None)  # ← спрячет
     def retrieve(self, request, pk=None):

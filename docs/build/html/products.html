@@ -1,0 +1,1439 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Товары &mdash; документация iShop 1.0.1</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=472891ee"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=cd1d70c9"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="Корзина" href="cart.html" />
+    <link rel="prev" title="Пользователи" href="main.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            iShop
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Приложения</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="auth.html">Авторизация</a></li>
+<li class="toctree-l2"><a class="reference internal" href="main.html">Пользователи</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Товары</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-products.models">products.models module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#products.models.Product"><code class="docutils literal notranslate"><span class="pre">Product</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-products.serializers">products.serializers module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#products.serializers.ProductSerializer"><code class="docutils literal notranslate"><span class="pre">ProductSerializer</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-products.urls">products.urls module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-products.views">products.views module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#products.views.ProductViewSet"><code class="docutils literal notranslate"><span class="pre">ProductViewSet</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-products">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cart.html">Корзина</a></li>
+<li class="toctree-l2"><a class="reference internal" href="orders.html">Заказы</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Индексы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Алфавитный указатель</a></li>
+<li class="toctree-l1"><a class="reference internal" href="py-modindex.html">Состав модуля</a></li>
+<li class="toctree-l1"><a class="reference internal" href="search.html">Поиск</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">iShop</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Приложения</a></li>
+      <li class="breadcrumb-item active">Товары</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/products.rst.txt" rel="nofollow"> Просмотреть исходный код страницы</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>Товары<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Ссылка на этот заголовок"></a></h2>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Ссылка на этот заголовок"></a></h2>
+</section>
+<section id="module-products.models">
+<span id="products-models-module"></span><h2>products.models module<a class="headerlink" href="#module-products.models" title="Ссылка на этот заголовок"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="products.models.Product">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">products.models.</span></span><span class="sig-name descname"><span class="pre">Product</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/products/models.html#Product"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#products.models.Product" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<p>Модель товара в магазине.</p>
+<p>Представляет отдельный товар, который может быть добавлен продавцом
+и куплен покупателем.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.models.Product.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#products.models.Product.name" title="Ссылка на это определение"></a></dt>
+<dd><p>Название товара (максимум 200 символов).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.models.Product.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#products.models.Product.description" title="Ссылка на это определение"></a></dt>
+<dd><p>Полное описание товара. Может содержать HTML-разметку.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.models.Product.price">
+<span class="sig-name descname"><span class="pre">price</span></span><a class="headerlink" href="#products.models.Product.price" title="Ссылка на это определение"></a></dt>
+<dd><p>Цена товара в валюте магазина (до 999 999.99).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.models.Product.amount">
+<span class="sig-name descname"><span class="pre">amount</span></span><a class="headerlink" href="#products.models.Product.amount" title="Ссылка на это определение"></a></dt>
+<dd><p>Количество единиц товара на складе.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.models.Product.created_by">
+<span class="sig-name descname"><span class="pre">created_by</span></span><a class="headerlink" href="#products.models.Product.created_by" title="Ссылка на это определение"></a></dt>
+<dd><p>Продавец (пользователь типа ShopUser), который добавил товар.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.models.Product.created">
+<span class="sig-name descname"><span class="pre">created</span></span><a class="headerlink" href="#products.models.Product.created" title="Ссылка на это определение"></a></dt>
+<dd><p>Дата и время создания записи (автоматически).</p>
+</dd></dl>
+
+<p class="rubric">Примеры</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">product</span> <span class="o">=</span> <span class="n">Product</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;iPhone 15 Pro&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Новый телефон от Apple&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">price</span><span class="o">=</span><span class="mf">1299.99</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">amount</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">created_by</span><span class="o">=</span><span class="n">user</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py exception">
+<dt class="sig sig-object py" id="products.models.Product.DoesNotExist">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#products.models.Product.DoesNotExist" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.DoesNotExist.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.DoesNotExist.__str__" title="Ссылка на это определение"></a></dt>
+<dd><p>Return str(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.DoesNotExist.add_note">
+<span class="sig-name descname"><span class="pre">add_note</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.DoesNotExist.add_note" title="Ссылка на это определение"></a></dt>
+<dd><p>Exception.add_note(note) –
+add a note to the exception</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.models.Product.DoesNotExist.args">
+<span class="sig-name descname"><span class="pre">args</span></span><a class="headerlink" href="#products.models.Product.DoesNotExist.args" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.models.Product.DoesNotExist.silent_variable_failure">
+<span class="sig-name descname"><span class="pre">silent_variable_failure</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#products.models.Product.DoesNotExist.silent_variable_failure" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.DoesNotExist.with_traceback">
+<span class="sig-name descname"><span class="pre">with_traceback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.DoesNotExist.with_traceback" title="Ссылка на это определение"></a></dt>
+<dd><p>Exception.with_traceback(tb) –
+set self.__traceback__ to tb and return self.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="products.models.Product.MultipleObjectsReturned">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#products.models.Product.MultipleObjectsReturned" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.MultipleObjectsReturned.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.MultipleObjectsReturned.__str__" title="Ссылка на это определение"></a></dt>
+<dd><p>Return str(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.MultipleObjectsReturned.add_note">
+<span class="sig-name descname"><span class="pre">add_note</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.MultipleObjectsReturned.add_note" title="Ссылка на это определение"></a></dt>
+<dd><p>Exception.add_note(note) –
+add a note to the exception</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.models.Product.MultipleObjectsReturned.args">
+<span class="sig-name descname"><span class="pre">args</span></span><a class="headerlink" href="#products.models.Product.MultipleObjectsReturned.args" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.MultipleObjectsReturned.with_traceback">
+<span class="sig-name descname"><span class="pre">with_traceback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.MultipleObjectsReturned.with_traceback" title="Ссылка на это определение"></a></dt>
+<dd><p>Exception.with_traceback(tb) –
+set self.__traceback__ to tb and return self.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/products/models.html#Product.__str__"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#products.models.Product.__str__" title="Ссылка на это определение"></a></dt>
+<dd><p>Возвращает человекочитаемое название товара.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.adelete">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">adelete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">using</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_parents</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.adelete" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">amount</span></span><a class="headerlink" href="#id0" title="Ссылка на это определение"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.arefresh_from_db">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">arefresh_from_db</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">using</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_queryset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.arefresh_from_db" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.asave">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">asave</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_insert</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">using</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.asave" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.models.Product.cartitem_set">
+<span class="sig-name descname"><span class="pre">cartitem_set</span></span><a class="headerlink" href="#products.models.Product.cartitem_set" title="Ссылка на это определение"></a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.check">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.check" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/products/models.html#Product.clean"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#products.models.Product.clean" title="Ссылка на это определение"></a></dt>
+<dd><p>Валидация модели перед сохранением.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.clean_fields">
+<span class="sig-name descname"><span class="pre">clean_fields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.clean_fields" title="Ссылка на это определение"></a></dt>
+<dd><p>Clean all fields and raise a ValidationError containing a dict
+of all validation errors if any occur.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">created</span></span><a class="headerlink" href="#id2" title="Ссылка на это определение"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">created_by</span></span><a class="headerlink" href="#id3" title="Ссылка на это определение"></a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.models.Product.created_by_id">
+<span class="sig-name descname"><span class="pre">created_by_id</span></span><a class="headerlink" href="#products.models.Product.created_by_id" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.date_error_message">
+<span class="sig-name descname"><span class="pre">date_error_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lookup_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_for</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.date_error_message" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">using</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_parents</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.delete" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#id4" title="Ссылка на это определение"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.from_db">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_db</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.from_db" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.full_clean">
+<span class="sig-name descname"><span class="pre">full_clean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate_unique</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate_constraints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.full_clean" title="Ссылка на это определение"></a></dt>
+<dd><p>Call clean_fields(), clean(), validate_unique(), and
+validate_constraints() on the model. Raise a ValidationError for any
+errors that occur.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.get_constraints">
+<span class="sig-name descname"><span class="pre">get_constraints</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.get_constraints" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.get_deferred_fields">
+<span class="sig-name descname"><span class="pre">get_deferred_fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.get_deferred_fields" title="Ссылка на это определение"></a></dt>
+<dd><p>Return a set containing names of deferred fields for this instance.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.get_next_by_created">
+<span class="sig-name descname"><span class="pre">get_next_by_created</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">created&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.get_next_by_created" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.get_previous_by_created">
+<span class="sig-name descname"><span class="pre">get_previous_by_created</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">created&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.get_previous_by_created" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.models.Product.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#products.models.Product.id" title="Ссылка на это определение"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.is_available">
+<span class="sig-name descname"><span class="pre">is_available</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/products/models.html#Product.is_available"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#products.models.Product.is_available" title="Ссылка на это определение"></a></dt>
+<dd><p>Проверяет, есть ли товар в наличии.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True, если количество больше нуля.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#id5" title="Ссылка на это определение"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.models.Product.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#products.models.Product.objects" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.models.Product.orderitem_set">
+<span class="sig-name descname"><span class="pre">orderitem_set</span></span><a class="headerlink" href="#products.models.Product.orderitem_set" title="Ссылка на это определение"></a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="products.models.Product.pk">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pk</span></span><a class="headerlink" href="#products.models.Product.pk" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.prepare_database_save">
+<span class="sig-name descname"><span class="pre">prepare_database_save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.prepare_database_save" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">price</span></span><a class="headerlink" href="#id6" title="Ссылка на это определение"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.refresh_from_db">
+<span class="sig-name descname"><span class="pre">refresh_from_db</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">using</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_queryset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.refresh_from_db" title="Ссылка на это определение"></a></dt>
+<dd><p>Reload field values from the database.</p>
+<p>By default, the reloading happens from the database this instance was
+loaded from, or by the read router if this instance wasn’t loaded from
+any database. The using parameter will override the default.</p>
+<p>Fields can be used to specify which fields to reload. The fields
+should be an iterable of field attnames. If fields is None, then
+all non-deferred fields are reloaded.</p>
+<p>When accessing deferred fields of an instance, the deferred loading
+of the field will call this method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_insert</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">using</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.save" title="Ссылка на это определение"></a></dt>
+<dd><p>Save the current instance. Override this in a subclass if you want to
+control the saving process.</p>
+<p>The „force_insert“ and „force_update“ parameters can be used to insist
+that the «save» must be an SQL insert or update (or equivalent for
+non-SQL backends), respectively. Normally, they should not be set.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.save_base">
+<span class="sig-name descname"><span class="pre">save_base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_insert</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">using</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.save_base" title="Ссылка на это определение"></a></dt>
+<dd><p>Handle the parts of saving which should be done only once per save,
+yet need to be done in raw saves, too. This includes some sanity
+checks and signal sending.</p>
+<p>The „raw“ argument is telling save_base not to save any parent
+models and not to do any changes to the values before save. This
+is used by fixture loading.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.serializable_value">
+<span class="sig-name descname"><span class="pre">serializable_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.serializable_value" title="Ссылка на это определение"></a></dt>
+<dd><p>Return the value of the field name for this instance. If the field is
+a foreign key, return the id value instead of the object. If there’s
+no Field object with this name on the model, return the model
+attribute’s value.</p>
+<p>Used to serialize a field’s value (in the serializer, or form output,
+for example). Normally, you would just access the attribute directly
+and not use this method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.unique_error_message">
+<span class="sig-name descname"><span class="pre">unique_error_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_class</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_check</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.unique_error_message" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.validate_constraints">
+<span class="sig-name descname"><span class="pre">validate_constraints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.validate_constraints" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.models.Product.validate_unique">
+<span class="sig-name descname"><span class="pre">validate_unique</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.models.Product.validate_unique" title="Ссылка на это определение"></a></dt>
+<dd><p>Check unique constraints on the model and raise ValidationError if any
+failed.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-products.serializers">
+<span id="products-serializers-module"></span><h2>products.serializers module<a class="headerlink" href="#module-products.serializers" title="Ссылка на этот заголовок"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">products.serializers.</span></span><span class="sig-name descname"><span class="pre">ProductSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/products/serializers.html#ProductSerializer"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#products.serializers.ProductSerializer" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelSerializer</span></code></p>
+<p>When a field is instantiated, we store the arguments that were used,
+so that we can present a helpful representation of the object.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.Meta">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/products/serializers.html#ProductSerializer.Meta"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#products.serializers.ProductSerializer.Meta" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.Meta.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['id',</span> <span class="pre">'name',</span> <span class="pre">'description',</span> <span class="pre">'price',</span> <span class="pre">'amount']</span></em><a class="headerlink" href="#products.serializers.ProductSerializer.Meta.fields" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#products.serializers.ProductSerializer.Meta.model" title="Ссылка на это определение"></a></dt>
+<dd><p>псевдоним для <a class="reference internal" href="#products.models.Product" title="products.models.Product"><code class="xref py py-class docutils literal notranslate"><span class="pre">Product</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.bind">
+<span class="sig-name descname"><span class="pre">bind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.bind" title="Ссылка на это определение"></a></dt>
+<dd><p>Initializes the field name and parent for the field instance.
+Called when a field is added to the parent serializer instance.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.build_field">
+<span class="sig-name descname"><span class="pre">build_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_class</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nested_depth</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.build_field" title="Ссылка на это определение"></a></dt>
+<dd><p>Return a two tuple of (cls, kwargs) to build a serializer field with.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.build_nested_field">
+<span class="sig-name descname"><span class="pre">build_nested_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relation_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nested_depth</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.build_nested_field" title="Ссылка на это определение"></a></dt>
+<dd><p>Create nested fields for forward and reverse relationships.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.build_property_field">
+<span class="sig-name descname"><span class="pre">build_property_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_class</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.build_property_field" title="Ссылка на это определение"></a></dt>
+<dd><p>Create a read only field for model methods and properties.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.build_relational_field">
+<span class="sig-name descname"><span class="pre">build_relational_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relation_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.build_relational_field" title="Ссылка на это определение"></a></dt>
+<dd><p>Create fields for forward and reverse relationships.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.build_standard_field">
+<span class="sig-name descname"><span class="pre">build_standard_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_field</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.build_standard_field" title="Ссылка на это определение"></a></dt>
+<dd><p>Create regular model fields.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.build_unknown_field">
+<span class="sig-name descname"><span class="pre">build_unknown_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_class</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.build_unknown_field" title="Ссылка на это определение"></a></dt>
+<dd><p>Raise an error on any unknown fields.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.build_url_field">
+<span class="sig-name descname"><span class="pre">build_url_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_class</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.build_url_field" title="Ссылка на это определение"></a></dt>
+<dd><p>Create a field representing the object’s own URL.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.context">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">context</span></span><a class="headerlink" href="#products.serializers.ProductSerializer.context" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns the context as passed to the root serializer on initialization.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">validated_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.create" title="Ссылка на это определение"></a></dt>
+<dd><p>We have a bit of extra checking around this in order to provide
+descriptive messages when something goes wrong, but this method is
+essentially just:</p>
+<blockquote>
+<div><p>return ExampleModel.objects.create(<a href="#id7"><span class="problematic" id="id8">**</span></a>validated_data)</p>
+</div></blockquote>
+<p>If there are many to many fields present on the instance then they
+cannot be set until the model is instantiated, in which case the
+implementation is like so:</p>
+<blockquote>
+<div><p>example_relationship = validated_data.pop(„example_relationship“)
+instance = ExampleModel.objects.create(<a href="#id9"><span class="problematic" id="id10">**</span></a>validated_data)
+instance.example_relationship = example_relationship
+return instance</p>
+</div></blockquote>
+<p>The default implementation also does not handle nested relationships.
+If you want to support writable nested relationships you’ll need
+to write an explicit <cite>.create()</cite> method.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.data">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#products.serializers.ProductSerializer.data" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.default_empty_html">
+<span class="sig-name descname"><span class="pre">default_empty_html</span></span><a class="headerlink" href="#products.serializers.ProductSerializer.default_empty_html" title="Ссылка на это определение"></a></dt>
+<dd><p>псевдоним для <code class="xref py py-class docutils literal notranslate"><span class="pre">empty</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.default_error_messages">
+<span class="sig-name descname"><span class="pre">default_error_messages</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'invalid':</span> <span class="pre">'Invalid</span> <span class="pre">data.</span> <span class="pre">Expected</span> <span class="pre">a</span> <span class="pre">dictionary,</span> <span class="pre">but</span> <span class="pre">got</span> <span class="pre">{datatype}.'}</span></em><a class="headerlink" href="#products.serializers.ProductSerializer.default_error_messages" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.default_validators">
+<span class="sig-name descname"><span class="pre">default_validators</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#products.serializers.ProductSerializer.default_validators" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.errors">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">errors</span></span><a class="headerlink" href="#products.serializers.ProductSerializer.errors" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.fail">
+<span class="sig-name descname"><span class="pre">fail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.fail" title="Ссылка на это определение"></a></dt>
+<dd><p>A helper method that simply raises a validation error.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><a class="headerlink" href="#products.serializers.ProductSerializer.fields" title="Ссылка на это определение"></a></dt>
+<dd><p>field_instance}.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary of {field_name</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.get_attribute">
+<span class="sig-name descname"><span class="pre">get_attribute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.get_attribute" title="Ссылка на это определение"></a></dt>
+<dd><p>Given the <em>outgoing</em> object instance, return the primitive value
+that should be used for this field.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.get_default">
+<span class="sig-name descname"><span class="pre">get_default</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.get_default" title="Ссылка на это определение"></a></dt>
+<dd><p>Return the default value to use when validating data if no input
+is provided for this field.</p>
+<p>If a default has not been set for this field then this will simply
+raise <cite>SkipField</cite>, indicating that no value should be set in the
+validated data for this field.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.get_default_field_names">
+<span class="sig-name descname"><span class="pre">get_default_field_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">declared_fields</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.get_default_field_names" title="Ссылка на это определение"></a></dt>
+<dd><p>Return the default list of field names that will be used if the
+<cite>Meta.fields</cite> option is not specified.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.get_extra_kwargs">
+<span class="sig-name descname"><span class="pre">get_extra_kwargs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.get_extra_kwargs" title="Ссылка на это определение"></a></dt>
+<dd><p>Return a dictionary mapping field names to a dictionary of
+additional keyword arguments.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.get_field_names">
+<span class="sig-name descname"><span class="pre">get_field_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">declared_fields</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.get_field_names" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns the list of all field names that should be created when
+instantiating this serializer class. This is based on the default
+set of fields, but also takes into account the <cite>Meta.fields</cite> or
+<cite>Meta.exclude</cite> options if they have been specified.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.get_fields">
+<span class="sig-name descname"><span class="pre">get_fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.get_fields" title="Ссылка на это определение"></a></dt>
+<dd><p>Return the dict of field names -&gt; field instances that should be
+used for <cite>self.fields</cite> when instantiating the serializer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.get_initial">
+<span class="sig-name descname"><span class="pre">get_initial</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.get_initial" title="Ссылка на это определение"></a></dt>
+<dd><p>Return a value to use when the field is being returned as a primitive
+value, without any object instance.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.get_unique_for_date_validators">
+<span class="sig-name descname"><span class="pre">get_unique_for_date_validators</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.get_unique_for_date_validators" title="Ссылка на это определение"></a></dt>
+<dd><p>Determine a default set of validators for the following constraints:</p>
+<ul class="simple">
+<li><p>unique_for_date</p></li>
+<li><p>unique_for_month</p></li>
+<li><p>unique_for_year</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.get_unique_together_constraints">
+<span class="sig-name descname"><span class="pre">get_unique_together_constraints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.get_unique_together_constraints" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns iterator of (fields, queryset, condition_fields, condition),
+each entry describes an unique together constraint on <cite>fields</cite> in <cite>queryset</cite>
+with respect of constraint’s <cite>condition</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.get_unique_together_validators">
+<span class="sig-name descname"><span class="pre">get_unique_together_validators</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.get_unique_together_validators" title="Ссылка на это определение"></a></dt>
+<dd><p>Determine a default set of validators for any unique_together constraints.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.get_uniqueness_extra_kwargs">
+<span class="sig-name descname"><span class="pre">get_uniqueness_extra_kwargs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">declared_fields</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.get_uniqueness_extra_kwargs" title="Ссылка на это определение"></a></dt>
+<dd><p>Return any additional field options that need to be included as a
+result of uniqueness constraints on the model. This is returned as
+a two-tuple of:</p>
+<p>(„dict of updated extra kwargs“, „mapping of hidden fields“)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.get_validators">
+<span class="sig-name descname"><span class="pre">get_validators</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.get_validators" title="Ссылка на это определение"></a></dt>
+<dd><p>Determine the set of validators to use when instantiating serializer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.get_value">
+<span class="sig-name descname"><span class="pre">get_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.get_value" title="Ссылка на это определение"></a></dt>
+<dd><p>Given the <em>incoming</em> primitive data, return the value for this field
+that should be validated and transformed to a native value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.include_extra_kwargs">
+<span class="sig-name descname"><span class="pre">include_extra_kwargs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kwargs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.include_extra_kwargs" title="Ссылка на это определение"></a></dt>
+<dd><p>Include any „extra_kwargs“ that have been included for this field,
+possibly removing any incompatible existing keyword arguments.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.initial">
+<span class="sig-name descname"><span class="pre">initial</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#products.serializers.ProductSerializer.initial" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.is_valid">
+<span class="sig-name descname"><span class="pre">is_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_exception</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.is_valid" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.many_init">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">many_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.many_init" title="Ссылка на это определение"></a></dt>
+<dd><p>This method implements the creation of a <cite>ListSerializer</cite> parent
+class when <cite>many=True</cite> is used. You can customize it if you need to
+control which keyword arguments are passed to the parent, and
+which are passed to the child.</p>
+<p>Note that we’re over-cautious in passing most arguments to both parent
+and child classes in order to try to cover the general case. If you’re
+overriding this method you’ll probably want something much simpler, eg:</p>
+<p>&#64;classmethod
+def many_init(cls, <a href="#id11"><span class="problematic" id="id12">*</span></a>args, <a href="#id13"><span class="problematic" id="id14">**</span></a>kwargs):</p>
+<blockquote>
+<div><p>kwargs[„child“] = cls()
+return CustomListSerializer(<a href="#id15"><span class="problematic" id="id16">*</span></a>args, <a href="#id17"><span class="problematic" id="id18">**</span></a>kwargs)</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.root">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root</span></span><a class="headerlink" href="#products.serializers.ProductSerializer.root" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns the top-level serializer for this field.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.run_validation">
+<span class="sig-name descname"><span class="pre">run_validation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=&lt;class</span> <span class="pre">'rest_framework.fields.empty'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.run_validation" title="Ссылка на это определение"></a></dt>
+<dd><p>We override the default <cite>run_validation</cite>, because the validation
+performed by validators and the <cite>.validate()</cite> method should
+be coerced into an error dictionary with a „non_fields_error“ key.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.run_validators">
+<span class="sig-name descname"><span class="pre">run_validators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.run_validators" title="Ссылка на это определение"></a></dt>
+<dd><p>Add read_only fields with defaults to value before running validators.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.save" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.serializer_choice_field">
+<span class="sig-name descname"><span class="pre">serializer_choice_field</span></span><a class="headerlink" href="#products.serializers.ProductSerializer.serializer_choice_field" title="Ссылка на это определение"></a></dt>
+<dd><p>псевдоним для <code class="xref py py-class docutils literal notranslate"><span class="pre">ChoiceField</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.serializer_field_mapping">
+<span class="sig-name descname"><span class="pre">serializer_field_mapping</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{&lt;class</span> <span class="pre">'django.db.models.fields.AutoField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.IntegerField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.BigIntegerField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.IntegerField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.BooleanField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.BooleanField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.CharField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.CharField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.CommaSeparatedIntegerField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.CharField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.DateField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.DateField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.DateTimeField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.DateTimeField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.DecimalField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.DecimalField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.DurationField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.DurationField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.EmailField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.EmailField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.Field'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.ModelField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.FilePathField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.FilePathField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.FloatField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.FloatField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.GenericIPAddressField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.IPAddressField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.IntegerField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.IntegerField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.NullBooleanField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.BooleanField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.PositiveIntegerField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.IntegerField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.PositiveSmallIntegerField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.IntegerField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.SlugField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.SlugField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.SmallIntegerField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.IntegerField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.TextField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.CharField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.TimeField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.TimeField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.URLField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.URLField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.UUIDField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.UUIDField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.files.FileField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.FileField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.files.ImageField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.ImageField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.json.JSONField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.JSONField'&gt;}</span></em><a class="headerlink" href="#products.serializers.ProductSerializer.serializer_field_mapping" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.serializer_related_field">
+<span class="sig-name descname"><span class="pre">serializer_related_field</span></span><a class="headerlink" href="#products.serializers.ProductSerializer.serializer_related_field" title="Ссылка на это определение"></a></dt>
+<dd><p>псевдоним для <code class="xref py py-class docutils literal notranslate"><span class="pre">PrimaryKeyRelatedField</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.serializer_related_to_field">
+<span class="sig-name descname"><span class="pre">serializer_related_to_field</span></span><a class="headerlink" href="#products.serializers.ProductSerializer.serializer_related_to_field" title="Ссылка на это определение"></a></dt>
+<dd><p>псевдоним для <code class="xref py py-class docutils literal notranslate"><span class="pre">SlugRelatedField</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.serializer_url_field">
+<span class="sig-name descname"><span class="pre">serializer_url_field</span></span><a class="headerlink" href="#products.serializers.ProductSerializer.serializer_url_field" title="Ссылка на это определение"></a></dt>
+<dd><p>псевдоним для <code class="xref py py-class docutils literal notranslate"><span class="pre">HyperlinkedIdentityField</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.set_value">
+<span class="sig-name descname"><span class="pre">set_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keys</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.set_value" title="Ссылка на это определение"></a></dt>
+<dd><p>Similar to Python’s built in <cite>dictionary[key] = value</cite>,
+but takes a list of nested keys instead of a single key.</p>
+<p>set_value({„a“: 1}, [], {„b“: 2}) -&gt; {„a“: 1, „b“: 2}
+set_value({„a“: 1}, [„x“], 2) -&gt; {„a“: 1, „x“: 2}
+set_value({„a“: 1}, [„x“, „y“], 2) -&gt; {„a“: 1, „x“: {„y“: 2}}</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.to_internal_value">
+<span class="sig-name descname"><span class="pre">to_internal_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.to_internal_value" title="Ссылка на это определение"></a></dt>
+<dd><p>Dict of native values &lt;- Dict of primitive datatypes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.to_representation">
+<span class="sig-name descname"><span class="pre">to_representation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.to_representation" title="Ссылка на это определение"></a></dt>
+<dd><p>Object instance -&gt; Dict of primitive datatypes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validated_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.update" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.url_field_name">
+<span class="sig-name descname"><span class="pre">url_field_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#products.serializers.ProductSerializer.url_field_name" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.validate" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.validate_empty_values">
+<span class="sig-name descname"><span class="pre">validate_empty_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.serializers.ProductSerializer.validate_empty_values" title="Ссылка на это определение"></a></dt>
+<dd><p>Validate empty values, and either:</p>
+<ul class="simple">
+<li><p>Raise <cite>ValidationError</cite>, indicating invalid data.</p></li>
+<li><p>Raise <cite>SkipField</cite>, indicating that the field should be ignored.</p></li>
+<li><p>Return (True, data), indicating an empty value that should be
+returned without any further validation being applied.</p></li>
+<li><p>Return (False, data), indicating a non-empty value, that should
+have validation applied as normal.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.validated_data">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validated_data</span></span><a class="headerlink" href="#products.serializers.ProductSerializer.validated_data" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="products.serializers.ProductSerializer.validators">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validators</span></span><a class="headerlink" href="#products.serializers.ProductSerializer.validators" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-products.urls">
+<span id="products-urls-module"></span><h2>products.urls module<a class="headerlink" href="#module-products.urls" title="Ссылка на этот заголовок"></a></h2>
+</section>
+<section id="module-products.views">
+<span id="products-views-module"></span><h2>products.views module<a class="headerlink" href="#module-products.views" title="Ссылка на этот заголовок"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="products.views.ProductViewSet">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">products.views.</span></span><span class="sig-name descname"><span class="pre">ProductViewSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/products/views.html#ProductViewSet"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#products.views.ProductViewSet" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelViewSet</span></code></p>
+<p>Constructor. Called in the URLconf; can contain helpful extra
+keyword arguments, and other things.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.allowed_methods">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">allowed_methods</span></span><a class="headerlink" href="#products.views.ProductViewSet.allowed_methods" title="Ссылка на это определение"></a></dt>
+<dd><p>Wrap Django’s private <cite>_allowed_methods</cite> interface in a public property.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.as_view">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">as_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">initkwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.as_view" title="Ссылка на это определение"></a></dt>
+<dd><p>Because of the way class based views create a closure around the
+instantiated view, we need to totally reimplement <cite>.as_view</cite>,
+and slightly modify the view function that is created and returned.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.authentication_classes">
+<span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework_simplejwt.authentication.JWTAuthentication'&gt;]</span></em><a class="headerlink" href="#products.views.ProductViewSet.authentication_classes" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.basename">
+<span class="sig-name descname"><span class="pre">basename</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#products.views.ProductViewSet.basename" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.check_object_permissions">
+<span class="sig-name descname"><span class="pre">check_object_permissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.check_object_permissions" title="Ссылка на это определение"></a></dt>
+<dd><p>Check if the request should be permitted for a given object.
+Raises an appropriate exception if the request is not permitted.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.check_permissions">
+<span class="sig-name descname"><span class="pre">check_permissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.check_permissions" title="Ссылка на это определение"></a></dt>
+<dd><p>Check if the request should be permitted.
+Raises an appropriate exception if the request is not permitted.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.check_throttles">
+<span class="sig-name descname"><span class="pre">check_throttles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.check_throttles" title="Ссылка на это определение"></a></dt>
+<dd><p>Check if request should be throttled.
+Raises an appropriate exception if the request is throttled.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.content_negotiation_class">
+<span class="sig-name descname"><span class="pre">content_negotiation_class</span></span><a class="headerlink" href="#products.views.ProductViewSet.content_negotiation_class" title="Ссылка на это определение"></a></dt>
+<dd><p>псевдоним для <code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultContentNegotiation</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/products/views.html#ProductViewSet.create"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#products.views.ProductViewSet.create" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.default_response_headers">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_response_headers</span></span><a class="headerlink" href="#products.views.ProductViewSet.default_response_headers" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#products.views.ProductViewSet.description" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.destroy">
+<span class="sig-name descname"><span class="pre">destroy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/products/views.html#ProductViewSet.destroy"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#products.views.ProductViewSet.destroy" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.detail">
+<span class="sig-name descname"><span class="pre">detail</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#products.views.ProductViewSet.detail" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.determine_version">
+<span class="sig-name descname"><span class="pre">determine_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.determine_version" title="Ссылка на это определение"></a></dt>
+<dd><p>If versioning is being used, then determine any API version for the
+incoming request. Returns a two-tuple of (version, versioning_scheme)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.dispatch">
+<span class="sig-name descname"><span class="pre">dispatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.dispatch" title="Ссылка на это определение"></a></dt>
+<dd><p><cite>.dispatch()</cite> is pretty much the same as Django’s regular dispatch,
+but with extra hooks for startup, finalize, and exception handling.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.filter_backends">
+<span class="sig-name descname"><span class="pre">filter_backends</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#products.views.ProductViewSet.filter_backends" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.filter_queryset">
+<span class="sig-name descname"><span class="pre">filter_queryset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">queryset</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.filter_queryset" title="Ссылка на это определение"></a></dt>
+<dd><p>Given a queryset, filter it with whichever filter backend is in use.</p>
+<p>You are unlikely to want to override this method, although you may need
+to call it either from a list view, or from a custom <cite>get_object</cite>
+method if you want to apply the configured filtering backend to the
+default queryset.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.finalize_response">
+<span class="sig-name descname"><span class="pre">finalize_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.finalize_response" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns the final response object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.get_authenticate_header">
+<span class="sig-name descname"><span class="pre">get_authenticate_header</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.get_authenticate_header" title="Ссылка на это определение"></a></dt>
+<dd><p>If a request is unauthenticated, determine the WWW-Authenticate
+header to use for 401 responses, if any.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.get_authenticators">
+<span class="sig-name descname"><span class="pre">get_authenticators</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.get_authenticators" title="Ссылка на это определение"></a></dt>
+<dd><p>Instantiates and returns the list of authenticators that this view can use.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.get_content_negotiator">
+<span class="sig-name descname"><span class="pre">get_content_negotiator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.get_content_negotiator" title="Ссылка на это определение"></a></dt>
+<dd><p>Instantiate and return the content negotiation class to use.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.get_exception_handler">
+<span class="sig-name descname"><span class="pre">get_exception_handler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.get_exception_handler" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns the exception handler that this view uses.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.get_exception_handler_context">
+<span class="sig-name descname"><span class="pre">get_exception_handler_context</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.get_exception_handler_context" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns a dict that is passed through to EXCEPTION_HANDLER,
+as the <cite>context</cite> argument.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.get_extra_action_url_map">
+<span class="sig-name descname"><span class="pre">get_extra_action_url_map</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.get_extra_action_url_map" title="Ссылка на это определение"></a></dt>
+<dd><p>Build a map of {names: urls} for the extra actions.</p>
+<p>This method will noop if <cite>detail</cite> was not provided as a view initkwarg.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.get_extra_actions">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_extra_actions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.get_extra_actions" title="Ссылка на это определение"></a></dt>
+<dd><p>Get the methods that are marked as an extra ViewSet <cite>&#64;action</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.get_format_suffix">
+<span class="sig-name descname"><span class="pre">get_format_suffix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.get_format_suffix" title="Ссылка на это определение"></a></dt>
+<dd><p>Determine if the request includes a „.json“ style format suffix</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.get_object">
+<span class="sig-name descname"><span class="pre">get_object</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.get_object" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns the object the view is displaying.</p>
+<p>You may want to override this if you need to provide non-standard
+queryset lookups.  Eg if objects are referenced using multiple
+keyword arguments in the url conf.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.get_paginated_response">
+<span class="sig-name descname"><span class="pre">get_paginated_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.get_paginated_response" title="Ссылка на это определение"></a></dt>
+<dd><p>Return a paginated style <cite>Response</cite> object for the given output data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.get_parser_context">
+<span class="sig-name descname"><span class="pre">get_parser_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.get_parser_context" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns a dict that is passed through to Parser.parse(),
+as the <cite>parser_context</cite> keyword argument.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.get_parsers">
+<span class="sig-name descname"><span class="pre">get_parsers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.get_parsers" title="Ссылка на это определение"></a></dt>
+<dd><p>Instantiates and returns the list of parsers that this view can use.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.get_permissions">
+<span class="sig-name descname"><span class="pre">get_permissions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/products/views.html#ProductViewSet.get_permissions"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#products.views.ProductViewSet.get_permissions" title="Ссылка на это определение"></a></dt>
+<dd><p>Только list — публичный (AllowAny)
+Все остальные действия (create, retrieve, update, destroy) — только для авторизованных</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.get_queryset">
+<span class="sig-name descname"><span class="pre">get_queryset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/products/views.html#ProductViewSet.get_queryset"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#products.views.ProductViewSet.get_queryset" title="Ссылка на это определение"></a></dt>
+<dd><p>Get the list of items for this view.
+This must be an iterable, and may be a queryset.
+Defaults to using <cite>self.queryset</cite>.</p>
+<p>This method should always be used rather than accessing <cite>self.queryset</cite>
+directly, as <cite>self.queryset</cite> gets evaluated only once, and those results
+are cached for all subsequent requests.</p>
+<p>You may want to override this if you need to provide different
+querysets depending on the incoming request.</p>
+<p>(Eg. return a list of items that is specific to the user)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.get_renderer_context">
+<span class="sig-name descname"><span class="pre">get_renderer_context</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.get_renderer_context" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns a dict that is passed through to Renderer.render(),
+as the <cite>renderer_context</cite> keyword argument.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.get_renderers">
+<span class="sig-name descname"><span class="pre">get_renderers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.get_renderers" title="Ссылка на это определение"></a></dt>
+<dd><p>Instantiates and returns the list of renderers that this view can use.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.get_serializer">
+<span class="sig-name descname"><span class="pre">get_serializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.get_serializer" title="Ссылка на это определение"></a></dt>
+<dd><p>Return the serializer instance that should be used for validating and
+deserializing input, and for serializing output.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.get_serializer_class">
+<span class="sig-name descname"><span class="pre">get_serializer_class</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.get_serializer_class" title="Ссылка на это определение"></a></dt>
+<dd><p>Return the class to use for the serializer.
+Defaults to using <cite>self.serializer_class</cite>.</p>
+<p>You may want to override this if you need to provide different
+serializations depending on the incoming request.</p>
+<p>(Eg. admins get full serialization, others get basic serialization)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.get_serializer_context">
+<span class="sig-name descname"><span class="pre">get_serializer_context</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.get_serializer_context" title="Ссылка на это определение"></a></dt>
+<dd><p>Extra context provided to the serializer class.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.get_success_headers">
+<span class="sig-name descname"><span class="pre">get_success_headers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.get_success_headers" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.get_throttles">
+<span class="sig-name descname"><span class="pre">get_throttles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.get_throttles" title="Ссылка на это определение"></a></dt>
+<dd><p>Instantiates and returns the list of throttles that this view uses.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.get_view_description">
+<span class="sig-name descname"><span class="pre">get_view_description</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">html</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.get_view_description" title="Ссылка на это определение"></a></dt>
+<dd><p>Return some descriptive text for the view, as used in OPTIONS responses
+and in the browsable API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.get_view_name">
+<span class="sig-name descname"><span class="pre">get_view_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.get_view_name" title="Ссылка на это определение"></a></dt>
+<dd><p>Return the view name, as used in OPTIONS responses and in the
+browsable API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.handle_exception">
+<span class="sig-name descname"><span class="pre">handle_exception</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.handle_exception" title="Ссылка на это определение"></a></dt>
+<dd><p>Handle any exception that occurs, by returning an appropriate response,
+or re-raising the error.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.http_method_names">
+<span class="sig-name descname"><span class="pre">http_method_names</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['get',</span> <span class="pre">'post',</span> <span class="pre">'put',</span> <span class="pre">'patch',</span> <span class="pre">'delete',</span> <span class="pre">'head',</span> <span class="pre">'options',</span> <span class="pre">'trace']</span></em><a class="headerlink" href="#products.views.ProductViewSet.http_method_names" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.http_method_not_allowed">
+<span class="sig-name descname"><span class="pre">http_method_not_allowed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.http_method_not_allowed" title="Ссылка на это определение"></a></dt>
+<dd><p>If <cite>request.method</cite> does not correspond to a handler method,
+determine what kind of exception to raise.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.initial">
+<span class="sig-name descname"><span class="pre">initial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.initial" title="Ссылка на это определение"></a></dt>
+<dd><p>Runs anything that needs to occur prior to calling the method handler.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.initialize_request">
+<span class="sig-name descname"><span class="pre">initialize_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.initialize_request" title="Ссылка на это определение"></a></dt>
+<dd><p>Set the <cite>.action</cite> attribute on the view, depending on the request method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.list">
+<span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/products/views.html#ProductViewSet.list"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#products.views.ProductViewSet.list" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.lookup_field">
+<span class="sig-name descname"><span class="pre">lookup_field</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pk'</span></em><a class="headerlink" href="#products.views.ProductViewSet.lookup_field" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.lookup_url_kwarg">
+<span class="sig-name descname"><span class="pre">lookup_url_kwarg</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#products.views.ProductViewSet.lookup_url_kwarg" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.metadata_class">
+<span class="sig-name descname"><span class="pre">metadata_class</span></span><a class="headerlink" href="#products.views.ProductViewSet.metadata_class" title="Ссылка на это определение"></a></dt>
+<dd><p>псевдоним для <code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleMetadata</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#products.views.ProductViewSet.name" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.options">
+<span class="sig-name descname"><span class="pre">options</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.options" title="Ссылка на это определение"></a></dt>
+<dd><p>Handler method for HTTP „OPTIONS“ request.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.paginate_queryset">
+<span class="sig-name descname"><span class="pre">paginate_queryset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">queryset</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.paginate_queryset" title="Ссылка на это определение"></a></dt>
+<dd><p>Return a single page of results, or <cite>None</cite> if pagination is disabled.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.pagination_class">
+<span class="sig-name descname"><span class="pre">pagination_class</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#products.views.ProductViewSet.pagination_class" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.paginator">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">paginator</span></span><a class="headerlink" href="#products.views.ProductViewSet.paginator" title="Ссылка на это определение"></a></dt>
+<dd><p>The paginator instance associated with the view, or <cite>None</cite>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.parser_classes">
+<span class="sig-name descname"><span class="pre">parser_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework.parsers.JSONParser'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.parsers.FormParser'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.parsers.MultiPartParser'&gt;]</span></em><a class="headerlink" href="#products.views.ProductViewSet.parser_classes" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.partial_update">
+<span class="sig-name descname"><span class="pre">partial_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/products/views.html#ProductViewSet.partial_update"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#products.views.ProductViewSet.partial_update" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.perform_authentication">
+<span class="sig-name descname"><span class="pre">perform_authentication</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.perform_authentication" title="Ссылка на это определение"></a></dt>
+<dd><p>Perform authentication on the incoming request.</p>
+<p>Note that if you override this and simply „pass“, then authentication
+will instead be performed lazily, the first time either
+<cite>request.user</cite> or <cite>request.auth</cite> is accessed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.perform_content_negotiation">
+<span class="sig-name descname"><span class="pre">perform_content_negotiation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.perform_content_negotiation" title="Ссылка на это определение"></a></dt>
+<dd><p>Determine which renderer and media type to use render the response.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.perform_create">
+<span class="sig-name descname"><span class="pre">perform_create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serializer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/products/views.html#ProductViewSet.perform_create"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#products.views.ProductViewSet.perform_create" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.perform_destroy">
+<span class="sig-name descname"><span class="pre">perform_destroy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.perform_destroy" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.perform_update">
+<span class="sig-name descname"><span class="pre">perform_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serializer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.perform_update" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.permission_classes">
+<span class="sig-name descname"><span class="pre">permission_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework.permissions.IsAuthenticated'&gt;]</span></em><a class="headerlink" href="#products.views.ProductViewSet.permission_classes" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.permission_denied">
+<span class="sig-name descname"><span class="pre">permission_denied</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.permission_denied" title="Ссылка на это определение"></a></dt>
+<dd><p>If request is not permitted, determine what kind of exception to raise.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.queryset">
+<span class="sig-name descname"><span class="pre">queryset</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#products.views.ProductViewSet.queryset" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.raise_uncaught_exception">
+<span class="sig-name descname"><span class="pre">raise_uncaught_exception</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.raise_uncaught_exception" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.renderer_classes">
+<span class="sig-name descname"><span class="pre">renderer_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework.renderers.JSONRenderer'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.renderers.BrowsableAPIRenderer'&gt;]</span></em><a class="headerlink" href="#products.views.ProductViewSet.renderer_classes" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.retrieve">
+<span class="sig-name descname"><span class="pre">retrieve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/products/views.html#ProductViewSet.retrieve"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#products.views.ProductViewSet.retrieve" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.reverse_action">
+<span class="sig-name descname"><span class="pre">reverse_action</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.reverse_action" title="Ссылка на это определение"></a></dt>
+<dd><p>Reverse the action for the given <cite>url_name</cite>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.schema">
+<span class="sig-name descname"><span class="pre">schema</span></span><a class="headerlink" href="#products.views.ProductViewSet.schema" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.serializer_class">
+<span class="sig-name descname"><span class="pre">serializer_class</span></span><a class="headerlink" href="#products.views.ProductViewSet.serializer_class" title="Ссылка на это определение"></a></dt>
+<dd><p>псевдоним для <a class="reference internal" href="#products.serializers.ProductSerializer" title="products.serializers.ProductSerializer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProductSerializer</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.settings">
+<span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;rest_framework.settings.APISettings</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#products.views.ProductViewSet.settings" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.setup" title="Ссылка на это определение"></a></dt>
+<dd><p>Initialize attributes shared by all view methods.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.suffix">
+<span class="sig-name descname"><span class="pre">suffix</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#products.views.ProductViewSet.suffix" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.throttle_classes">
+<span class="sig-name descname"><span class="pre">throttle_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#products.views.ProductViewSet.throttle_classes" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.throttled">
+<span class="sig-name descname"><span class="pre">throttled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#products.views.ProductViewSet.throttled" title="Ссылка на это определение"></a></dt>
+<dd><p>If request is throttled, determine what kind of exception to raise.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/products/views.html#ProductViewSet.update"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#products.views.ProductViewSet.update" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.versioning_class">
+<span class="sig-name descname"><span class="pre">versioning_class</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#products.views.ProductViewSet.versioning_class" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="products.views.ProductViewSet.view_is_async">
+<span class="sig-name descname"><span class="pre">view_is_async</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#products.views.ProductViewSet.view_is_async" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-products">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-products" title="Ссылка на этот заголовок"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="main.html" class="btn btn-neutral float-left" title="Пользователи" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="cart.html" class="btn btn-neutral float-right" title="Корзина" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, Igor K.. </p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

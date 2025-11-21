@@ -1,0 +1,205 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>rest_framework.negotiation &mdash; документация iShop 1.0.1</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=472891ee"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/translations.js?v=cd1d70c9"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            iShop
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">modules</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Индексы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../genindex.html">Алфавитный указатель</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../py-modindex.html">Состав модуля</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../search.html">Поиск</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">iShop</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Код модуля</a></li>
+      <li class="breadcrumb-item active">rest_framework.negotiation</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Исходный код rest_framework.negotiation</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Content negotiation deals with selecting an appropriate renderer given the</span>
+<span class="sd">incoming request.  Typically this will be based on the request&#39;s Accept header.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">Http404</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">rest_framework</span><span class="w"> </span><span class="kn">import</span> <span class="n">exceptions</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rest_framework.settings</span><span class="w"> </span><span class="kn">import</span> <span class="n">api_settings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rest_framework.utils.mediatypes</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">_MediaType</span><span class="p">,</span> <span class="n">media_type_matches</span><span class="p">,</span> <span class="n">order_by_precedence</span>
+<span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">BaseContentNegotiation</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">select_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">parsers</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;.select_parser() must be implemented&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">select_renderer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">renderers</span><span class="p">,</span> <span class="n">format_suffix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;.select_renderer() must be implemented&#39;</span><span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">DefaultContentNegotiation</span><span class="p">(</span><span class="n">BaseContentNegotiation</span><span class="p">):</span>
+    <span class="n">settings</span> <span class="o">=</span> <span class="n">api_settings</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">select_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">parsers</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Given a list of parsers and a media type, return the appropriate</span>
+<span class="sd">        parser to handle the incoming request.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">parser</span> <span class="ow">in</span> <span class="n">parsers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">media_type_matches</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">media_type</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">content_type</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">parser</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">select_renderer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">renderers</span><span class="p">,</span> <span class="n">format_suffix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Given a request and a list of renderers, return a two-tuple of:</span>
+<span class="sd">        (renderer, media type).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Allow URL style format override.  eg. &quot;?format=json</span>
+        <span class="n">format_query_param</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">URL_FORMAT_OVERRIDE</span>
+        <span class="nb">format</span> <span class="o">=</span> <span class="n">format_suffix</span> <span class="ow">or</span> <span class="n">request</span><span class="o">.</span><span class="n">query_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">format_query_param</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">format</span><span class="p">:</span>
+            <span class="n">renderers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_renderers</span><span class="p">(</span><span class="n">renderers</span><span class="p">,</span> <span class="nb">format</span><span class="p">)</span>
+
+        <span class="n">accepts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_accept_list</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+        <span class="c1"># Check the acceptable media types against each renderer,</span>
+        <span class="c1"># attempting more specific media types first</span>
+        <span class="c1"># NB. The inner loop here isn&#39;t as bad as it first looks :)</span>
+        <span class="c1">#     Worst case is we&#39;re looping over len(accept_list) * len(self.renderers)</span>
+        <span class="k">for</span> <span class="n">media_type_set</span> <span class="ow">in</span> <span class="n">order_by_precedence</span><span class="p">(</span><span class="n">accepts</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">renderer</span> <span class="ow">in</span> <span class="n">renderers</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">media_type</span> <span class="ow">in</span> <span class="n">media_type_set</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">media_type_matches</span><span class="p">(</span><span class="n">renderer</span><span class="o">.</span><span class="n">media_type</span><span class="p">,</span> <span class="n">media_type</span><span class="p">):</span>
+                        <span class="c1"># Return the most specific media type as accepted.</span>
+                        <span class="n">media_type_wrapper</span> <span class="o">=</span> <span class="n">_MediaType</span><span class="p">(</span><span class="n">media_type</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="p">(</span>
+                            <span class="n">_MediaType</span><span class="p">(</span><span class="n">renderer</span><span class="o">.</span><span class="n">media_type</span><span class="p">)</span><span class="o">.</span><span class="n">precedence</span> <span class="o">&gt;</span>
+                            <span class="n">media_type_wrapper</span><span class="o">.</span><span class="n">precedence</span>
+                        <span class="p">):</span>
+                            <span class="c1"># Eg client requests &#39;*/*&#39;</span>
+                            <span class="c1"># Accepted media type is &#39;application/json&#39;</span>
+                            <span class="n">full_media_type</span> <span class="o">=</span> <span class="s1">&#39;;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                                <span class="p">(</span><span class="n">renderer</span><span class="o">.</span><span class="n">media_type</span><span class="p">,)</span> <span class="o">+</span>
+                                <span class="nb">tuple</span><span class="p">(</span>
+                                    <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1">=</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">&#39;</span>
+                                    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">media_type_wrapper</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                                <span class="p">)</span>
+                            <span class="p">)</span>
+                            <span class="k">return</span> <span class="n">renderer</span><span class="p">,</span> <span class="n">full_media_type</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="c1"># Eg client requests &#39;application/json; indent=8&#39;</span>
+                            <span class="c1"># Accepted media type is &#39;application/json; indent=8&#39;</span>
+                            <span class="k">return</span> <span class="n">renderer</span><span class="p">,</span> <span class="n">media_type</span>
+
+        <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">NotAcceptable</span><span class="p">(</span><span class="n">available_renderers</span><span class="o">=</span><span class="n">renderers</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">filter_renderers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">renderers</span><span class="p">,</span> <span class="nb">format</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If there is a &#39;.json&#39; style format suffix, filter the renderers</span>
+<span class="sd">        so that we only negotiation against those that accept that format.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">renderers</span> <span class="o">=</span> <span class="p">[</span><span class="n">renderer</span> <span class="k">for</span> <span class="n">renderer</span> <span class="ow">in</span> <span class="n">renderers</span>
+                     <span class="k">if</span> <span class="n">renderer</span><span class="o">.</span><span class="n">format</span> <span class="o">==</span> <span class="nb">format</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">renderers</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">Http404</span>
+        <span class="k">return</span> <span class="n">renderers</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_accept_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Given the incoming request, return a tokenized list of media</span>
+<span class="sd">        type strings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">META</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;HTTP_ACCEPT&#39;</span><span class="p">,</span> <span class="s1">&#39;*/*&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">token</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">header</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)]</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, Igor K.. </p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

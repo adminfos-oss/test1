@@ -2,13 +2,14 @@
 from rest_framework import serializers
 from .models import Cart, CartItem
 
+
 class CartItemSerializer(serializers.ModelSerializer):
     # product_id = serializers.IntegerField(write_only=True)
-    product_name = serializers.CharField(source='product.name', read_only=True)
+    product_name = serializers.CharField(source="product.name", read_only=True)
 
     class Meta:
         model = CartItem
-        fields = ['id', 'product_id', 'product_name', 'quantity']
+        fields = ["id", "product_id", "product_name", "quantity"]
 
 
 class CartSerializer(serializers.ModelSerializer):
@@ -16,23 +17,26 @@ class CartSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cart
-        fields = ['id', 'session', 'user', 'created_at', 'items']
+        fields = ["id", "session", "user", "created_at", "items"]
         # fields = ['id', 'items']
-        unique_together = ('session', 'user')
+        unique_together = ("session", "user")
+
 
 # Новый сериализатор ТОЛЬКО для remove_item
 class RemoveItemSerializer(serializers.Serializer):
     product_id = serializers.IntegerField(required=True, help_text="ID товара")
     quantity = serializers.IntegerField(
-        required=False,               # ← НЕ обязательно!
+        required=False,  # ← НЕ обязательно!
         min_value=1,
-        help_text="Количество для удаления (по умолчанию — всё)"
+        help_text="Количество для удаления (по умолчанию — всё)",
     )
+
 
 class AddItemSerializer(serializers.Serializer):
     product_id = serializers.IntegerField(min_value=1, help_text="ID продукта")
-    quantity = serializers.IntegerField(min_value=1, max_value=100, default=1,
-                                        help_text="Количество (по умолчанию 1)")
+    quantity = serializers.IntegerField(
+        min_value=1, max_value=100, default=1, help_text="Количество (по умолчанию 1)"
+    )
 
     # Опционально: валидация
     # def validate_product_id(self, value):

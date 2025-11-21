@@ -1,0 +1,1658 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Авторизация &mdash; документация iShop 1.0.1</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=472891ee"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=cd1d70c9"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="Пользователи" href="main.html" />
+    <link rel="prev" title="modules" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            iShop
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">modules</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Авторизация</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-auth.serializers">auth.serializers module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#auth.serializers.LoginSerializer"><code class="docutils literal notranslate"><span class="pre">LoginSerializer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#auth.serializers.SignupSerializer"><code class="docutils literal notranslate"><span class="pre">SignupSerializer</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-auth.urls">auth.urls module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-auth.views">auth.views module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#auth.views.LoginView"><code class="docutils literal notranslate"><span class="pre">LoginView</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#auth.views.LogoutView"><code class="docutils literal notranslate"><span class="pre">LogoutView</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#auth.views.SignupView"><code class="docutils literal notranslate"><span class="pre">SignupView</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-auth">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="main.html">Пользователи</a></li>
+<li class="toctree-l2"><a class="reference internal" href="products.html">Товары</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cart.html">Корзина</a></li>
+<li class="toctree-l2"><a class="reference internal" href="orders.html">Заказы</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Индексы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Алфавитный указатель</a></li>
+<li class="toctree-l1"><a class="reference internal" href="py-modindex.html">Состав модуля</a></li>
+<li class="toctree-l1"><a class="reference internal" href="search.html">Поиск</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">iShop</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">modules</a></li>
+      <li class="breadcrumb-item active">Авторизация</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/auth.rst.txt" rel="nofollow"> Просмотреть исходный код страницы</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>Авторизация<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Ссылка на этот заголовок"></a></h2>
+</section>
+<section id="module-auth.serializers">
+<span id="auth-serializers-module"></span><h2>auth.serializers module<a class="headerlink" href="#module-auth.serializers" title="Ссылка на этот заголовок"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">auth.serializers.</span></span><span class="sig-name descname"><span class="pre">LoginSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/auth/serializers.html#LoginSerializer"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#auth.serializers.LoginSerializer" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">Serializer</span></code></p>
+<p>When a field is instantiated, we store the arguments that were used,
+so that we can present a helpful representation of the object.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.bind">
+<span class="sig-name descname"><span class="pre">bind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.LoginSerializer.bind" title="Ссылка на это определение"></a></dt>
+<dd><p>Initializes the field name and parent for the field instance.
+Called when a field is added to the parent serializer instance.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.context">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">context</span></span><a class="headerlink" href="#auth.serializers.LoginSerializer.context" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns the context as passed to the root serializer on initialization.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">validated_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.LoginSerializer.create" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.data">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#auth.serializers.LoginSerializer.data" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.default_empty_html">
+<span class="sig-name descname"><span class="pre">default_empty_html</span></span><a class="headerlink" href="#auth.serializers.LoginSerializer.default_empty_html" title="Ссылка на это определение"></a></dt>
+<dd><p>псевдоним для <code class="xref py py-class docutils literal notranslate"><span class="pre">empty</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.default_error_messages">
+<span class="sig-name descname"><span class="pre">default_error_messages</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'invalid':</span> <span class="pre">'Invalid</span> <span class="pre">data.</span> <span class="pre">Expected</span> <span class="pre">a</span> <span class="pre">dictionary,</span> <span class="pre">but</span> <span class="pre">got</span> <span class="pre">{datatype}.'}</span></em><a class="headerlink" href="#auth.serializers.LoginSerializer.default_error_messages" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.default_validators">
+<span class="sig-name descname"><span class="pre">default_validators</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#auth.serializers.LoginSerializer.default_validators" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.errors">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">errors</span></span><a class="headerlink" href="#auth.serializers.LoginSerializer.errors" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.fail">
+<span class="sig-name descname"><span class="pre">fail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.LoginSerializer.fail" title="Ссылка на это определение"></a></dt>
+<dd><p>A helper method that simply raises a validation error.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><a class="headerlink" href="#auth.serializers.LoginSerializer.fields" title="Ссылка на это определение"></a></dt>
+<dd><p>field_instance}.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary of {field_name</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.get_attribute">
+<span class="sig-name descname"><span class="pre">get_attribute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.LoginSerializer.get_attribute" title="Ссылка на это определение"></a></dt>
+<dd><p>Given the <em>outgoing</em> object instance, return the primitive value
+that should be used for this field.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.get_default">
+<span class="sig-name descname"><span class="pre">get_default</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.LoginSerializer.get_default" title="Ссылка на это определение"></a></dt>
+<dd><p>Return the default value to use when validating data if no input
+is provided for this field.</p>
+<p>If a default has not been set for this field then this will simply
+raise <cite>SkipField</cite>, indicating that no value should be set in the
+validated data for this field.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.get_fields">
+<span class="sig-name descname"><span class="pre">get_fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.LoginSerializer.get_fields" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns a dictionary of {field_name: field_instance}.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.get_initial">
+<span class="sig-name descname"><span class="pre">get_initial</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.LoginSerializer.get_initial" title="Ссылка на это определение"></a></dt>
+<dd><p>Return a value to use when the field is being returned as a primitive
+value, without any object instance.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.get_validators">
+<span class="sig-name descname"><span class="pre">get_validators</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.LoginSerializer.get_validators" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns a list of validator callables.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.get_value">
+<span class="sig-name descname"><span class="pre">get_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.LoginSerializer.get_value" title="Ссылка на это определение"></a></dt>
+<dd><p>Given the <em>incoming</em> primitive data, return the value for this field
+that should be validated and transformed to a native value.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.initial">
+<span class="sig-name descname"><span class="pre">initial</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#auth.serializers.LoginSerializer.initial" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.is_valid">
+<span class="sig-name descname"><span class="pre">is_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_exception</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.LoginSerializer.is_valid" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.many_init">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">many_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.LoginSerializer.many_init" title="Ссылка на это определение"></a></dt>
+<dd><p>This method implements the creation of a <cite>ListSerializer</cite> parent
+class when <cite>many=True</cite> is used. You can customize it if you need to
+control which keyword arguments are passed to the parent, and
+which are passed to the child.</p>
+<p>Note that we’re over-cautious in passing most arguments to both parent
+and child classes in order to try to cover the general case. If you’re
+overriding this method you’ll probably want something much simpler, eg:</p>
+<p>&#64;classmethod
+def many_init(cls, <a href="#id2"><span class="problematic" id="id3">*</span></a>args, <a href="#id4"><span class="problematic" id="id5">**</span></a>kwargs):</p>
+<blockquote>
+<div><p>kwargs[„child“] = cls()
+return CustomListSerializer(<a href="#id6"><span class="problematic" id="id7">*</span></a>args, <a href="#id8"><span class="problematic" id="id9">**</span></a>kwargs)</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.root">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root</span></span><a class="headerlink" href="#auth.serializers.LoginSerializer.root" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns the top-level serializer for this field.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.run_validation">
+<span class="sig-name descname"><span class="pre">run_validation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=&lt;class</span> <span class="pre">'rest_framework.fields.empty'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.LoginSerializer.run_validation" title="Ссылка на это определение"></a></dt>
+<dd><p>We override the default <cite>run_validation</cite>, because the validation
+performed by validators and the <cite>.validate()</cite> method should
+be coerced into an error dictionary with a „non_fields_error“ key.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.run_validators">
+<span class="sig-name descname"><span class="pre">run_validators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.LoginSerializer.run_validators" title="Ссылка на это определение"></a></dt>
+<dd><p>Add read_only fields with defaults to value before running validators.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.LoginSerializer.save" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.set_value">
+<span class="sig-name descname"><span class="pre">set_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keys</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.LoginSerializer.set_value" title="Ссылка на это определение"></a></dt>
+<dd><p>Similar to Python’s built in <cite>dictionary[key] = value</cite>,
+but takes a list of nested keys instead of a single key.</p>
+<p>set_value({„a“: 1}, [], {„b“: 2}) -&gt; {„a“: 1, „b“: 2}
+set_value({„a“: 1}, [„x“], 2) -&gt; {„a“: 1, „x“: 2}
+set_value({„a“: 1}, [„x“, „y“], 2) -&gt; {„a“: 1, „x“: {„y“: 2}}</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.to_internal_value">
+<span class="sig-name descname"><span class="pre">to_internal_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.LoginSerializer.to_internal_value" title="Ссылка на это определение"></a></dt>
+<dd><p>Dict of native values &lt;- Dict of primitive datatypes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.to_representation">
+<span class="sig-name descname"><span class="pre">to_representation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.LoginSerializer.to_representation" title="Ссылка на это определение"></a></dt>
+<dd><p>Object instance -&gt; Dict of primitive datatypes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validated_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.LoginSerializer.update" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/auth/serializers.html#LoginSerializer.validate"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#auth.serializers.LoginSerializer.validate" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.validate_empty_values">
+<span class="sig-name descname"><span class="pre">validate_empty_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.LoginSerializer.validate_empty_values" title="Ссылка на это определение"></a></dt>
+<dd><p>Validate empty values, and either:</p>
+<ul class="simple">
+<li><p>Raise <cite>ValidationError</cite>, indicating invalid data.</p></li>
+<li><p>Raise <cite>SkipField</cite>, indicating that the field should be ignored.</p></li>
+<li><p>Return (True, data), indicating an empty value that should be
+returned without any further validation being applied.</p></li>
+<li><p>Return (False, data), indicating a non-empty value, that should
+have validation applied as normal.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.validated_data">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validated_data</span></span><a class="headerlink" href="#auth.serializers.LoginSerializer.validated_data" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="auth.serializers.LoginSerializer.validators">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validators</span></span><a class="headerlink" href="#auth.serializers.LoginSerializer.validators" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">auth.serializers.</span></span><span class="sig-name descname"><span class="pre">SignupSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/auth/serializers.html#SignupSerializer"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#auth.serializers.SignupSerializer" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelSerializer</span></code></p>
+<p>When a field is instantiated, we store the arguments that were used,
+so that we can present a helpful representation of the object.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.Meta">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/auth/serializers.html#SignupSerializer.Meta"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#auth.serializers.SignupSerializer.Meta" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.Meta.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['username',</span> <span class="pre">'email',</span> <span class="pre">'password',</span> <span class="pre">'password_confirm']</span></em><a class="headerlink" href="#auth.serializers.SignupSerializer.Meta.fields" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#auth.serializers.SignupSerializer.Meta.model" title="Ссылка на это определение"></a></dt>
+<dd><p>псевдоним для <a class="reference internal" href="main.html#main.models.ShopUser" title="main.models.ShopUser"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShopUser</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.bind">
+<span class="sig-name descname"><span class="pre">bind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.bind" title="Ссылка на это определение"></a></dt>
+<dd><p>Initializes the field name and parent for the field instance.
+Called when a field is added to the parent serializer instance.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.build_field">
+<span class="sig-name descname"><span class="pre">build_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_class</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nested_depth</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.build_field" title="Ссылка на это определение"></a></dt>
+<dd><p>Return a two tuple of (cls, kwargs) to build a serializer field with.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.build_nested_field">
+<span class="sig-name descname"><span class="pre">build_nested_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relation_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nested_depth</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.build_nested_field" title="Ссылка на это определение"></a></dt>
+<dd><p>Create nested fields for forward and reverse relationships.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.build_property_field">
+<span class="sig-name descname"><span class="pre">build_property_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_class</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.build_property_field" title="Ссылка на это определение"></a></dt>
+<dd><p>Create a read only field for model methods and properties.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.build_relational_field">
+<span class="sig-name descname"><span class="pre">build_relational_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relation_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.build_relational_field" title="Ссылка на это определение"></a></dt>
+<dd><p>Create fields for forward and reverse relationships.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.build_standard_field">
+<span class="sig-name descname"><span class="pre">build_standard_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_field</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.build_standard_field" title="Ссылка на это определение"></a></dt>
+<dd><p>Create regular model fields.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.build_unknown_field">
+<span class="sig-name descname"><span class="pre">build_unknown_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_class</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.build_unknown_field" title="Ссылка на это определение"></a></dt>
+<dd><p>Raise an error on any unknown fields.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.build_url_field">
+<span class="sig-name descname"><span class="pre">build_url_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_class</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.build_url_field" title="Ссылка на это определение"></a></dt>
+<dd><p>Create a field representing the object’s own URL.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.context">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">context</span></span><a class="headerlink" href="#auth.serializers.SignupSerializer.context" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns the context as passed to the root serializer on initialization.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">validated_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/auth/serializers.html#SignupSerializer.create"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#auth.serializers.SignupSerializer.create" title="Ссылка на это определение"></a></dt>
+<dd><p>We have a bit of extra checking around this in order to provide
+descriptive messages when something goes wrong, but this method is
+essentially just:</p>
+<blockquote>
+<div><p>return ExampleModel.objects.create(<a href="#id10"><span class="problematic" id="id11">**</span></a>validated_data)</p>
+</div></blockquote>
+<p>If there are many to many fields present on the instance then they
+cannot be set until the model is instantiated, in which case the
+implementation is like so:</p>
+<blockquote>
+<div><p>example_relationship = validated_data.pop(„example_relationship“)
+instance = ExampleModel.objects.create(<a href="#id12"><span class="problematic" id="id13">**</span></a>validated_data)
+instance.example_relationship = example_relationship
+return instance</p>
+</div></blockquote>
+<p>The default implementation also does not handle nested relationships.
+If you want to support writable nested relationships you’ll need
+to write an explicit <cite>.create()</cite> method.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.data">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#auth.serializers.SignupSerializer.data" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.default_empty_html">
+<span class="sig-name descname"><span class="pre">default_empty_html</span></span><a class="headerlink" href="#auth.serializers.SignupSerializer.default_empty_html" title="Ссылка на это определение"></a></dt>
+<dd><p>псевдоним для <code class="xref py py-class docutils literal notranslate"><span class="pre">empty</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.default_error_messages">
+<span class="sig-name descname"><span class="pre">default_error_messages</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'invalid':</span> <span class="pre">'Invalid</span> <span class="pre">data.</span> <span class="pre">Expected</span> <span class="pre">a</span> <span class="pre">dictionary,</span> <span class="pre">but</span> <span class="pre">got</span> <span class="pre">{datatype}.'}</span></em><a class="headerlink" href="#auth.serializers.SignupSerializer.default_error_messages" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.default_validators">
+<span class="sig-name descname"><span class="pre">default_validators</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#auth.serializers.SignupSerializer.default_validators" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.errors">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">errors</span></span><a class="headerlink" href="#auth.serializers.SignupSerializer.errors" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.fail">
+<span class="sig-name descname"><span class="pre">fail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.fail" title="Ссылка на это определение"></a></dt>
+<dd><p>A helper method that simply raises a validation error.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><a class="headerlink" href="#auth.serializers.SignupSerializer.fields" title="Ссылка на это определение"></a></dt>
+<dd><p>field_instance}.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary of {field_name</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.get_attribute">
+<span class="sig-name descname"><span class="pre">get_attribute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.get_attribute" title="Ссылка на это определение"></a></dt>
+<dd><p>Given the <em>outgoing</em> object instance, return the primitive value
+that should be used for this field.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.get_default">
+<span class="sig-name descname"><span class="pre">get_default</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.get_default" title="Ссылка на это определение"></a></dt>
+<dd><p>Return the default value to use when validating data if no input
+is provided for this field.</p>
+<p>If a default has not been set for this field then this will simply
+raise <cite>SkipField</cite>, indicating that no value should be set in the
+validated data for this field.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.get_default_field_names">
+<span class="sig-name descname"><span class="pre">get_default_field_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">declared_fields</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.get_default_field_names" title="Ссылка на это определение"></a></dt>
+<dd><p>Return the default list of field names that will be used if the
+<cite>Meta.fields</cite> option is not specified.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.get_extra_kwargs">
+<span class="sig-name descname"><span class="pre">get_extra_kwargs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.get_extra_kwargs" title="Ссылка на это определение"></a></dt>
+<dd><p>Return a dictionary mapping field names to a dictionary of
+additional keyword arguments.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.get_field_names">
+<span class="sig-name descname"><span class="pre">get_field_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">declared_fields</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.get_field_names" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns the list of all field names that should be created when
+instantiating this serializer class. This is based on the default
+set of fields, but also takes into account the <cite>Meta.fields</cite> or
+<cite>Meta.exclude</cite> options if they have been specified.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.get_fields">
+<span class="sig-name descname"><span class="pre">get_fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.get_fields" title="Ссылка на это определение"></a></dt>
+<dd><p>Return the dict of field names -&gt; field instances that should be
+used for <cite>self.fields</cite> when instantiating the serializer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.get_initial">
+<span class="sig-name descname"><span class="pre">get_initial</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.get_initial" title="Ссылка на это определение"></a></dt>
+<dd><p>Return a value to use when the field is being returned as a primitive
+value, without any object instance.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.get_unique_for_date_validators">
+<span class="sig-name descname"><span class="pre">get_unique_for_date_validators</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.get_unique_for_date_validators" title="Ссылка на это определение"></a></dt>
+<dd><p>Determine a default set of validators for the following constraints:</p>
+<ul class="simple">
+<li><p>unique_for_date</p></li>
+<li><p>unique_for_month</p></li>
+<li><p>unique_for_year</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.get_unique_together_constraints">
+<span class="sig-name descname"><span class="pre">get_unique_together_constraints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.get_unique_together_constraints" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns iterator of (fields, queryset, condition_fields, condition),
+each entry describes an unique together constraint on <cite>fields</cite> in <cite>queryset</cite>
+with respect of constraint’s <cite>condition</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.get_unique_together_validators">
+<span class="sig-name descname"><span class="pre">get_unique_together_validators</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.get_unique_together_validators" title="Ссылка на это определение"></a></dt>
+<dd><p>Determine a default set of validators for any unique_together constraints.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.get_uniqueness_extra_kwargs">
+<span class="sig-name descname"><span class="pre">get_uniqueness_extra_kwargs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">declared_fields</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.get_uniqueness_extra_kwargs" title="Ссылка на это определение"></a></dt>
+<dd><p>Return any additional field options that need to be included as a
+result of uniqueness constraints on the model. This is returned as
+a two-tuple of:</p>
+<p>(„dict of updated extra kwargs“, „mapping of hidden fields“)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.get_validators">
+<span class="sig-name descname"><span class="pre">get_validators</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.get_validators" title="Ссылка на это определение"></a></dt>
+<dd><p>Determine the set of validators to use when instantiating serializer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.get_value">
+<span class="sig-name descname"><span class="pre">get_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.get_value" title="Ссылка на это определение"></a></dt>
+<dd><p>Given the <em>incoming</em> primitive data, return the value for this field
+that should be validated and transformed to a native value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.include_extra_kwargs">
+<span class="sig-name descname"><span class="pre">include_extra_kwargs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kwargs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.include_extra_kwargs" title="Ссылка на это определение"></a></dt>
+<dd><p>Include any „extra_kwargs“ that have been included for this field,
+possibly removing any incompatible existing keyword arguments.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.initial">
+<span class="sig-name descname"><span class="pre">initial</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#auth.serializers.SignupSerializer.initial" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.is_valid">
+<span class="sig-name descname"><span class="pre">is_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">raise_exception</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.is_valid" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.many_init">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">many_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.many_init" title="Ссылка на это определение"></a></dt>
+<dd><p>This method implements the creation of a <cite>ListSerializer</cite> parent
+class when <cite>many=True</cite> is used. You can customize it if you need to
+control which keyword arguments are passed to the parent, and
+which are passed to the child.</p>
+<p>Note that we’re over-cautious in passing most arguments to both parent
+and child classes in order to try to cover the general case. If you’re
+overriding this method you’ll probably want something much simpler, eg:</p>
+<p>&#64;classmethod
+def many_init(cls, <a href="#id14"><span class="problematic" id="id15">*</span></a>args, <a href="#id16"><span class="problematic" id="id17">**</span></a>kwargs):</p>
+<blockquote>
+<div><p>kwargs[„child“] = cls()
+return CustomListSerializer(<a href="#id18"><span class="problematic" id="id19">*</span></a>args, <a href="#id20"><span class="problematic" id="id21">**</span></a>kwargs)</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.root">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">root</span></span><a class="headerlink" href="#auth.serializers.SignupSerializer.root" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns the top-level serializer for this field.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.run_validation">
+<span class="sig-name descname"><span class="pre">run_validation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=&lt;class</span> <span class="pre">'rest_framework.fields.empty'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.run_validation" title="Ссылка на это определение"></a></dt>
+<dd><p>We override the default <cite>run_validation</cite>, because the validation
+performed by validators and the <cite>.validate()</cite> method should
+be coerced into an error dictionary with a „non_fields_error“ key.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.run_validators">
+<span class="sig-name descname"><span class="pre">run_validators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.run_validators" title="Ссылка на это определение"></a></dt>
+<dd><p>Add read_only fields with defaults to value before running validators.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.save" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.serializer_choice_field">
+<span class="sig-name descname"><span class="pre">serializer_choice_field</span></span><a class="headerlink" href="#auth.serializers.SignupSerializer.serializer_choice_field" title="Ссылка на это определение"></a></dt>
+<dd><p>псевдоним для <code class="xref py py-class docutils literal notranslate"><span class="pre">ChoiceField</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.serializer_field_mapping">
+<span class="sig-name descname"><span class="pre">serializer_field_mapping</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{&lt;class</span> <span class="pre">'django.db.models.fields.AutoField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.IntegerField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.BigIntegerField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.IntegerField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.BooleanField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.BooleanField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.CharField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.CharField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.CommaSeparatedIntegerField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.CharField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.DateField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.DateField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.DateTimeField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.DateTimeField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.DecimalField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.DecimalField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.DurationField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.DurationField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.EmailField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.EmailField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.Field'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.ModelField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.FilePathField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.FilePathField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.FloatField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.FloatField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.GenericIPAddressField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.IPAddressField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.IntegerField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.IntegerField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.NullBooleanField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.BooleanField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.PositiveIntegerField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.IntegerField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.PositiveSmallIntegerField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.IntegerField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.SlugField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.SlugField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.SmallIntegerField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.IntegerField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.TextField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.CharField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.TimeField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.TimeField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.URLField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.URLField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.UUIDField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.UUIDField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.files.FileField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.FileField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.files.ImageField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.ImageField'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'django.db.models.fields.json.JSONField'&gt;:</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.fields.JSONField'&gt;}</span></em><a class="headerlink" href="#auth.serializers.SignupSerializer.serializer_field_mapping" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.serializer_related_field">
+<span class="sig-name descname"><span class="pre">serializer_related_field</span></span><a class="headerlink" href="#auth.serializers.SignupSerializer.serializer_related_field" title="Ссылка на это определение"></a></dt>
+<dd><p>псевдоним для <code class="xref py py-class docutils literal notranslate"><span class="pre">PrimaryKeyRelatedField</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.serializer_related_to_field">
+<span class="sig-name descname"><span class="pre">serializer_related_to_field</span></span><a class="headerlink" href="#auth.serializers.SignupSerializer.serializer_related_to_field" title="Ссылка на это определение"></a></dt>
+<dd><p>псевдоним для <code class="xref py py-class docutils literal notranslate"><span class="pre">SlugRelatedField</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.serializer_url_field">
+<span class="sig-name descname"><span class="pre">serializer_url_field</span></span><a class="headerlink" href="#auth.serializers.SignupSerializer.serializer_url_field" title="Ссылка на это определение"></a></dt>
+<dd><p>псевдоним для <code class="xref py py-class docutils literal notranslate"><span class="pre">HyperlinkedIdentityField</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.set_value">
+<span class="sig-name descname"><span class="pre">set_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dictionary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keys</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.set_value" title="Ссылка на это определение"></a></dt>
+<dd><p>Similar to Python’s built in <cite>dictionary[key] = value</cite>,
+but takes a list of nested keys instead of a single key.</p>
+<p>set_value({„a“: 1}, [], {„b“: 2}) -&gt; {„a“: 1, „b“: 2}
+set_value({„a“: 1}, [„x“], 2) -&gt; {„a“: 1, „x“: 2}
+set_value({„a“: 1}, [„x“, „y“], 2) -&gt; {„a“: 1, „x“: {„y“: 2}}</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.to_internal_value">
+<span class="sig-name descname"><span class="pre">to_internal_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.to_internal_value" title="Ссылка на это определение"></a></dt>
+<dd><p>Dict of native values &lt;- Dict of primitive datatypes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.to_representation">
+<span class="sig-name descname"><span class="pre">to_representation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.to_representation" title="Ссылка на это определение"></a></dt>
+<dd><p>Object instance -&gt; Dict of primitive datatypes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validated_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.update" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.url_field_name">
+<span class="sig-name descname"><span class="pre">url_field_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#auth.serializers.SignupSerializer.url_field_name" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.validate">
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/auth/serializers.html#SignupSerializer.validate"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#auth.serializers.SignupSerializer.validate" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.validate_empty_values">
+<span class="sig-name descname"><span class="pre">validate_empty_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.serializers.SignupSerializer.validate_empty_values" title="Ссылка на это определение"></a></dt>
+<dd><p>Validate empty values, and either:</p>
+<ul class="simple">
+<li><p>Raise <cite>ValidationError</cite>, indicating invalid data.</p></li>
+<li><p>Raise <cite>SkipField</cite>, indicating that the field should be ignored.</p></li>
+<li><p>Return (True, data), indicating an empty value that should be
+returned without any further validation being applied.</p></li>
+<li><p>Return (False, data), indicating a non-empty value, that should
+have validation applied as normal.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.validated_data">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validated_data</span></span><a class="headerlink" href="#auth.serializers.SignupSerializer.validated_data" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="auth.serializers.SignupSerializer.validators">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validators</span></span><a class="headerlink" href="#auth.serializers.SignupSerializer.validators" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-auth.urls">
+<span id="auth-urls-module"></span><h2>auth.urls module<a class="headerlink" href="#module-auth.urls" title="Ссылка на этот заголовок"></a></h2>
+</section>
+<section id="module-auth.views">
+<span id="auth-views-module"></span><h2>auth.views module<a class="headerlink" href="#module-auth.views" title="Ссылка на этот заголовок"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="auth.views.LoginView">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">auth.views.</span></span><span class="sig-name descname"><span class="pre">LoginView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/auth/views.html#LoginView"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#auth.views.LoginView" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>Constructor. Called in the URLconf; can contain helpful extra
+keyword arguments, and other things.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="auth.views.LoginView.allowed_methods">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">allowed_methods</span></span><a class="headerlink" href="#auth.views.LoginView.allowed_methods" title="Ссылка на это определение"></a></dt>
+<dd><p>Wrap Django’s private <cite>_allowed_methods</cite> interface in a public property.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.as_view">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">as_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">initkwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.as_view" title="Ссылка на это определение"></a></dt>
+<dd><p>Store the original class on the view function.</p>
+<p>This allows us to discover information about the view when we do URL
+reverse lookups.  Used for breadcrumb generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LoginView.authentication_classes">
+<span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework_simplejwt.authentication.JWTAuthentication'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.authentication.SessionAuthentication'&gt;]</span></em><a class="headerlink" href="#auth.views.LoginView.authentication_classes" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.check_object_permissions">
+<span class="sig-name descname"><span class="pre">check_object_permissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.check_object_permissions" title="Ссылка на это определение"></a></dt>
+<dd><p>Check if the request should be permitted for a given object.
+Raises an appropriate exception if the request is not permitted.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.check_permissions">
+<span class="sig-name descname"><span class="pre">check_permissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.check_permissions" title="Ссылка на это определение"></a></dt>
+<dd><p>Check if the request should be permitted.
+Raises an appropriate exception if the request is not permitted.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.check_throttles">
+<span class="sig-name descname"><span class="pre">check_throttles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.check_throttles" title="Ссылка на это определение"></a></dt>
+<dd><p>Check if request should be throttled.
+Raises an appropriate exception if the request is throttled.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LoginView.content_negotiation_class">
+<span class="sig-name descname"><span class="pre">content_negotiation_class</span></span><a class="headerlink" href="#auth.views.LoginView.content_negotiation_class" title="Ссылка на это определение"></a></dt>
+<dd><p>псевдоним для <code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultContentNegotiation</span></code></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="auth.views.LoginView.default_response_headers">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_response_headers</span></span><a class="headerlink" href="#auth.views.LoginView.default_response_headers" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.determine_version">
+<span class="sig-name descname"><span class="pre">determine_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.determine_version" title="Ссылка на это определение"></a></dt>
+<dd><p>If versioning is being used, then determine any API version for the
+incoming request. Returns a two-tuple of (version, versioning_scheme)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.dispatch">
+<span class="sig-name descname"><span class="pre">dispatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.dispatch" title="Ссылка на это определение"></a></dt>
+<dd><p><cite>.dispatch()</cite> is pretty much the same as Django’s regular dispatch,
+but with extra hooks for startup, finalize, and exception handling.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.finalize_response">
+<span class="sig-name descname"><span class="pre">finalize_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.finalize_response" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns the final response object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.get_authenticate_header">
+<span class="sig-name descname"><span class="pre">get_authenticate_header</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.get_authenticate_header" title="Ссылка на это определение"></a></dt>
+<dd><p>If a request is unauthenticated, determine the WWW-Authenticate
+header to use for 401 responses, if any.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.get_authenticators">
+<span class="sig-name descname"><span class="pre">get_authenticators</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.get_authenticators" title="Ссылка на это определение"></a></dt>
+<dd><p>Instantiates and returns the list of authenticators that this view can use.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.get_content_negotiator">
+<span class="sig-name descname"><span class="pre">get_content_negotiator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.get_content_negotiator" title="Ссылка на это определение"></a></dt>
+<dd><p>Instantiate and return the content negotiation class to use.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.get_exception_handler">
+<span class="sig-name descname"><span class="pre">get_exception_handler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.get_exception_handler" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns the exception handler that this view uses.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.get_exception_handler_context">
+<span class="sig-name descname"><span class="pre">get_exception_handler_context</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.get_exception_handler_context" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns a dict that is passed through to EXCEPTION_HANDLER,
+as the <cite>context</cite> argument.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.get_format_suffix">
+<span class="sig-name descname"><span class="pre">get_format_suffix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.get_format_suffix" title="Ссылка на это определение"></a></dt>
+<dd><p>Determine if the request includes a „.json“ style format suffix</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.get_parser_context">
+<span class="sig-name descname"><span class="pre">get_parser_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.get_parser_context" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns a dict that is passed through to Parser.parse(),
+as the <cite>parser_context</cite> keyword argument.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.get_parsers">
+<span class="sig-name descname"><span class="pre">get_parsers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.get_parsers" title="Ссылка на это определение"></a></dt>
+<dd><p>Instantiates and returns the list of parsers that this view can use.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.get_permissions">
+<span class="sig-name descname"><span class="pre">get_permissions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.get_permissions" title="Ссылка на это определение"></a></dt>
+<dd><p>Instantiates and returns the list of permissions that this view requires.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.get_renderer_context">
+<span class="sig-name descname"><span class="pre">get_renderer_context</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.get_renderer_context" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns a dict that is passed through to Renderer.render(),
+as the <cite>renderer_context</cite> keyword argument.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.get_renderers">
+<span class="sig-name descname"><span class="pre">get_renderers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.get_renderers" title="Ссылка на это определение"></a></dt>
+<dd><p>Instantiates and returns the list of renderers that this view can use.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.get_throttles">
+<span class="sig-name descname"><span class="pre">get_throttles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.get_throttles" title="Ссылка на это определение"></a></dt>
+<dd><p>Instantiates and returns the list of throttles that this view uses.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.get_view_description">
+<span class="sig-name descname"><span class="pre">get_view_description</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">html</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.get_view_description" title="Ссылка на это определение"></a></dt>
+<dd><p>Return some descriptive text for the view, as used in OPTIONS responses
+and in the browsable API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.get_view_name">
+<span class="sig-name descname"><span class="pre">get_view_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.get_view_name" title="Ссылка на это определение"></a></dt>
+<dd><p>Return the view name, as used in OPTIONS responses and in the
+browsable API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.handle_exception">
+<span class="sig-name descname"><span class="pre">handle_exception</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.handle_exception" title="Ссылка на это определение"></a></dt>
+<dd><p>Handle any exception that occurs, by returning an appropriate response,
+or re-raising the error.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LoginView.http_method_names">
+<span class="sig-name descname"><span class="pre">http_method_names</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['get',</span> <span class="pre">'post',</span> <span class="pre">'put',</span> <span class="pre">'patch',</span> <span class="pre">'delete',</span> <span class="pre">'head',</span> <span class="pre">'options',</span> <span class="pre">'trace']</span></em><a class="headerlink" href="#auth.views.LoginView.http_method_names" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.http_method_not_allowed">
+<span class="sig-name descname"><span class="pre">http_method_not_allowed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.http_method_not_allowed" title="Ссылка на это определение"></a></dt>
+<dd><p>If <cite>request.method</cite> does not correspond to a handler method,
+determine what kind of exception to raise.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.initial">
+<span class="sig-name descname"><span class="pre">initial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.initial" title="Ссылка на это определение"></a></dt>
+<dd><p>Runs anything that needs to occur prior to calling the method handler.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.initialize_request">
+<span class="sig-name descname"><span class="pre">initialize_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.initialize_request" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns the initial request object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LoginView.metadata_class">
+<span class="sig-name descname"><span class="pre">metadata_class</span></span><a class="headerlink" href="#auth.views.LoginView.metadata_class" title="Ссылка на это определение"></a></dt>
+<dd><p>псевдоним для <code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleMetadata</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.options">
+<span class="sig-name descname"><span class="pre">options</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.options" title="Ссылка на это определение"></a></dt>
+<dd><p>Handler method for HTTP „OPTIONS“ request.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LoginView.parser_classes">
+<span class="sig-name descname"><span class="pre">parser_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework.parsers.JSONParser'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.parsers.FormParser'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.parsers.MultiPartParser'&gt;]</span></em><a class="headerlink" href="#auth.views.LoginView.parser_classes" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.perform_authentication">
+<span class="sig-name descname"><span class="pre">perform_authentication</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.perform_authentication" title="Ссылка на это определение"></a></dt>
+<dd><p>Perform authentication on the incoming request.</p>
+<p>Note that if you override this and simply „pass“, then authentication
+will instead be performed lazily, the first time either
+<cite>request.user</cite> or <cite>request.auth</cite> is accessed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.perform_content_negotiation">
+<span class="sig-name descname"><span class="pre">perform_content_negotiation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.perform_content_negotiation" title="Ссылка на это определение"></a></dt>
+<dd><p>Determine which renderer and media type to use render the response.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LoginView.permission_classes">
+<span class="sig-name descname"><span class="pre">permission_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework.permissions.AllowAny'&gt;]</span></em><a class="headerlink" href="#auth.views.LoginView.permission_classes" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.permission_denied">
+<span class="sig-name descname"><span class="pre">permission_denied</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.permission_denied" title="Ссылка на это определение"></a></dt>
+<dd><p>If request is not permitted, determine what kind of exception to raise.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/auth/views.html#LoginView.post"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#auth.views.LoginView.post" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.raise_uncaught_exception">
+<span class="sig-name descname"><span class="pre">raise_uncaught_exception</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.raise_uncaught_exception" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LoginView.renderer_classes">
+<span class="sig-name descname"><span class="pre">renderer_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework.renderers.JSONRenderer'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.renderers.BrowsableAPIRenderer'&gt;]</span></em><a class="headerlink" href="#auth.views.LoginView.renderer_classes" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LoginView.schema">
+<span class="sig-name descname"><span class="pre">schema</span></span><a class="headerlink" href="#auth.views.LoginView.schema" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LoginView.settings">
+<span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;rest_framework.settings.APISettings</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#auth.views.LoginView.settings" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.setup" title="Ссылка на это определение"></a></dt>
+<dd><p>Initialize attributes shared by all view methods.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LoginView.throttle_classes">
+<span class="sig-name descname"><span class="pre">throttle_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#auth.views.LoginView.throttle_classes" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LoginView.throttled">
+<span class="sig-name descname"><span class="pre">throttled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LoginView.throttled" title="Ссылка на это определение"></a></dt>
+<dd><p>If request is throttled, determine what kind of exception to raise.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LoginView.versioning_class">
+<span class="sig-name descname"><span class="pre">versioning_class</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#auth.views.LoginView.versioning_class" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LoginView.view_is_async">
+<span class="sig-name descname"><span class="pre">view_is_async</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#auth.views.LoginView.view_is_async" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="auth.views.LogoutView">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">auth.views.</span></span><span class="sig-name descname"><span class="pre">LogoutView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/auth/views.html#LogoutView"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#auth.views.LogoutView" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>Constructor. Called in the URLconf; can contain helpful extra
+keyword arguments, and other things.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="auth.views.LogoutView.allowed_methods">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">allowed_methods</span></span><a class="headerlink" href="#auth.views.LogoutView.allowed_methods" title="Ссылка на это определение"></a></dt>
+<dd><p>Wrap Django’s private <cite>_allowed_methods</cite> interface in a public property.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.as_view">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">as_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">initkwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.as_view" title="Ссылка на это определение"></a></dt>
+<dd><p>Store the original class on the view function.</p>
+<p>This allows us to discover information about the view when we do URL
+reverse lookups.  Used for breadcrumb generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LogoutView.authentication_classes">
+<span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework_simplejwt.authentication.JWTAuthentication'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.authentication.SessionAuthentication'&gt;]</span></em><a class="headerlink" href="#auth.views.LogoutView.authentication_classes" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.check_object_permissions">
+<span class="sig-name descname"><span class="pre">check_object_permissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.check_object_permissions" title="Ссылка на это определение"></a></dt>
+<dd><p>Check if the request should be permitted for a given object.
+Raises an appropriate exception if the request is not permitted.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.check_permissions">
+<span class="sig-name descname"><span class="pre">check_permissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.check_permissions" title="Ссылка на это определение"></a></dt>
+<dd><p>Check if the request should be permitted.
+Raises an appropriate exception if the request is not permitted.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.check_throttles">
+<span class="sig-name descname"><span class="pre">check_throttles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.check_throttles" title="Ссылка на это определение"></a></dt>
+<dd><p>Check if request should be throttled.
+Raises an appropriate exception if the request is throttled.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LogoutView.content_negotiation_class">
+<span class="sig-name descname"><span class="pre">content_negotiation_class</span></span><a class="headerlink" href="#auth.views.LogoutView.content_negotiation_class" title="Ссылка на это определение"></a></dt>
+<dd><p>псевдоним для <code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultContentNegotiation</span></code></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="auth.views.LogoutView.default_response_headers">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_response_headers</span></span><a class="headerlink" href="#auth.views.LogoutView.default_response_headers" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.determine_version">
+<span class="sig-name descname"><span class="pre">determine_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.determine_version" title="Ссылка на это определение"></a></dt>
+<dd><p>If versioning is being used, then determine any API version for the
+incoming request. Returns a two-tuple of (version, versioning_scheme)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.dispatch">
+<span class="sig-name descname"><span class="pre">dispatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.dispatch" title="Ссылка на это определение"></a></dt>
+<dd><p><cite>.dispatch()</cite> is pretty much the same as Django’s regular dispatch,
+but with extra hooks for startup, finalize, and exception handling.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.finalize_response">
+<span class="sig-name descname"><span class="pre">finalize_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.finalize_response" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns the final response object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.get_authenticate_header">
+<span class="sig-name descname"><span class="pre">get_authenticate_header</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.get_authenticate_header" title="Ссылка на это определение"></a></dt>
+<dd><p>If a request is unauthenticated, determine the WWW-Authenticate
+header to use for 401 responses, if any.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.get_authenticators">
+<span class="sig-name descname"><span class="pre">get_authenticators</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.get_authenticators" title="Ссылка на это определение"></a></dt>
+<dd><p>Instantiates and returns the list of authenticators that this view can use.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.get_content_negotiator">
+<span class="sig-name descname"><span class="pre">get_content_negotiator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.get_content_negotiator" title="Ссылка на это определение"></a></dt>
+<dd><p>Instantiate and return the content negotiation class to use.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.get_exception_handler">
+<span class="sig-name descname"><span class="pre">get_exception_handler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.get_exception_handler" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns the exception handler that this view uses.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.get_exception_handler_context">
+<span class="sig-name descname"><span class="pre">get_exception_handler_context</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.get_exception_handler_context" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns a dict that is passed through to EXCEPTION_HANDLER,
+as the <cite>context</cite> argument.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.get_format_suffix">
+<span class="sig-name descname"><span class="pre">get_format_suffix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.get_format_suffix" title="Ссылка на это определение"></a></dt>
+<dd><p>Determine if the request includes a „.json“ style format suffix</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.get_parser_context">
+<span class="sig-name descname"><span class="pre">get_parser_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.get_parser_context" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns a dict that is passed through to Parser.parse(),
+as the <cite>parser_context</cite> keyword argument.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.get_parsers">
+<span class="sig-name descname"><span class="pre">get_parsers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.get_parsers" title="Ссылка на это определение"></a></dt>
+<dd><p>Instantiates and returns the list of parsers that this view can use.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.get_permissions">
+<span class="sig-name descname"><span class="pre">get_permissions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.get_permissions" title="Ссылка на это определение"></a></dt>
+<dd><p>Instantiates and returns the list of permissions that this view requires.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.get_renderer_context">
+<span class="sig-name descname"><span class="pre">get_renderer_context</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.get_renderer_context" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns a dict that is passed through to Renderer.render(),
+as the <cite>renderer_context</cite> keyword argument.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.get_renderers">
+<span class="sig-name descname"><span class="pre">get_renderers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.get_renderers" title="Ссылка на это определение"></a></dt>
+<dd><p>Instantiates and returns the list of renderers that this view can use.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.get_throttles">
+<span class="sig-name descname"><span class="pre">get_throttles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.get_throttles" title="Ссылка на это определение"></a></dt>
+<dd><p>Instantiates and returns the list of throttles that this view uses.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.get_view_description">
+<span class="sig-name descname"><span class="pre">get_view_description</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">html</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.get_view_description" title="Ссылка на это определение"></a></dt>
+<dd><p>Return some descriptive text for the view, as used in OPTIONS responses
+and in the browsable API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.get_view_name">
+<span class="sig-name descname"><span class="pre">get_view_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.get_view_name" title="Ссылка на это определение"></a></dt>
+<dd><p>Return the view name, as used in OPTIONS responses and in the
+browsable API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.handle_exception">
+<span class="sig-name descname"><span class="pre">handle_exception</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.handle_exception" title="Ссылка на это определение"></a></dt>
+<dd><p>Handle any exception that occurs, by returning an appropriate response,
+or re-raising the error.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LogoutView.http_method_names">
+<span class="sig-name descname"><span class="pre">http_method_names</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['get',</span> <span class="pre">'post',</span> <span class="pre">'put',</span> <span class="pre">'patch',</span> <span class="pre">'delete',</span> <span class="pre">'head',</span> <span class="pre">'options',</span> <span class="pre">'trace']</span></em><a class="headerlink" href="#auth.views.LogoutView.http_method_names" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.http_method_not_allowed">
+<span class="sig-name descname"><span class="pre">http_method_not_allowed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.http_method_not_allowed" title="Ссылка на это определение"></a></dt>
+<dd><p>If <cite>request.method</cite> does not correspond to a handler method,
+determine what kind of exception to raise.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.initial">
+<span class="sig-name descname"><span class="pre">initial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.initial" title="Ссылка на это определение"></a></dt>
+<dd><p>Runs anything that needs to occur prior to calling the method handler.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.initialize_request">
+<span class="sig-name descname"><span class="pre">initialize_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.initialize_request" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns the initial request object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LogoutView.metadata_class">
+<span class="sig-name descname"><span class="pre">metadata_class</span></span><a class="headerlink" href="#auth.views.LogoutView.metadata_class" title="Ссылка на это определение"></a></dt>
+<dd><p>псевдоним для <code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleMetadata</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.options">
+<span class="sig-name descname"><span class="pre">options</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.options" title="Ссылка на это определение"></a></dt>
+<dd><p>Handler method for HTTP „OPTIONS“ request.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LogoutView.parser_classes">
+<span class="sig-name descname"><span class="pre">parser_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework.parsers.JSONParser'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.parsers.FormParser'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.parsers.MultiPartParser'&gt;]</span></em><a class="headerlink" href="#auth.views.LogoutView.parser_classes" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.perform_authentication">
+<span class="sig-name descname"><span class="pre">perform_authentication</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.perform_authentication" title="Ссылка на это определение"></a></dt>
+<dd><p>Perform authentication on the incoming request.</p>
+<p>Note that if you override this and simply „pass“, then authentication
+will instead be performed lazily, the first time either
+<cite>request.user</cite> or <cite>request.auth</cite> is accessed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.perform_content_negotiation">
+<span class="sig-name descname"><span class="pre">perform_content_negotiation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.perform_content_negotiation" title="Ссылка на это определение"></a></dt>
+<dd><p>Determine which renderer and media type to use render the response.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LogoutView.permission_classes">
+<span class="sig-name descname"><span class="pre">permission_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework.permissions.AllowAny'&gt;]</span></em><a class="headerlink" href="#auth.views.LogoutView.permission_classes" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.permission_denied">
+<span class="sig-name descname"><span class="pre">permission_denied</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.permission_denied" title="Ссылка на это определение"></a></dt>
+<dd><p>If request is not permitted, determine what kind of exception to raise.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/auth/views.html#LogoutView.post"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#auth.views.LogoutView.post" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.raise_uncaught_exception">
+<span class="sig-name descname"><span class="pre">raise_uncaught_exception</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.raise_uncaught_exception" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LogoutView.renderer_classes">
+<span class="sig-name descname"><span class="pre">renderer_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework.renderers.JSONRenderer'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.renderers.BrowsableAPIRenderer'&gt;]</span></em><a class="headerlink" href="#auth.views.LogoutView.renderer_classes" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LogoutView.schema">
+<span class="sig-name descname"><span class="pre">schema</span></span><a class="headerlink" href="#auth.views.LogoutView.schema" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LogoutView.settings">
+<span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;rest_framework.settings.APISettings</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#auth.views.LogoutView.settings" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.setup" title="Ссылка на это определение"></a></dt>
+<dd><p>Initialize attributes shared by all view methods.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LogoutView.throttle_classes">
+<span class="sig-name descname"><span class="pre">throttle_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#auth.views.LogoutView.throttle_classes" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.LogoutView.throttled">
+<span class="sig-name descname"><span class="pre">throttled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.LogoutView.throttled" title="Ссылка на это определение"></a></dt>
+<dd><p>If request is throttled, determine what kind of exception to raise.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LogoutView.versioning_class">
+<span class="sig-name descname"><span class="pre">versioning_class</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#auth.views.LogoutView.versioning_class" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.LogoutView.view_is_async">
+<span class="sig-name descname"><span class="pre">view_is_async</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#auth.views.LogoutView.view_is_async" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="auth.views.SignupView">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">auth.views.</span></span><span class="sig-name descname"><span class="pre">SignupView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/auth/views.html#SignupView"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#auth.views.SignupView" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">APIView</span></code></p>
+<p>Constructor. Called in the URLconf; can contain helpful extra
+keyword arguments, and other things.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="auth.views.SignupView.allowed_methods">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">allowed_methods</span></span><a class="headerlink" href="#auth.views.SignupView.allowed_methods" title="Ссылка на это определение"></a></dt>
+<dd><p>Wrap Django’s private <cite>_allowed_methods</cite> interface in a public property.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.as_view">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">as_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">initkwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.as_view" title="Ссылка на это определение"></a></dt>
+<dd><p>Store the original class on the view function.</p>
+<p>This allows us to discover information about the view when we do URL
+reverse lookups.  Used for breadcrumb generation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.SignupView.authentication_classes">
+<span class="sig-name descname"><span class="pre">authentication_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework_simplejwt.authentication.JWTAuthentication'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.authentication.SessionAuthentication'&gt;]</span></em><a class="headerlink" href="#auth.views.SignupView.authentication_classes" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.check_object_permissions">
+<span class="sig-name descname"><span class="pre">check_object_permissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.check_object_permissions" title="Ссылка на это определение"></a></dt>
+<dd><p>Check if the request should be permitted for a given object.
+Raises an appropriate exception if the request is not permitted.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.check_permissions">
+<span class="sig-name descname"><span class="pre">check_permissions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.check_permissions" title="Ссылка на это определение"></a></dt>
+<dd><p>Check if the request should be permitted.
+Raises an appropriate exception if the request is not permitted.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.check_throttles">
+<span class="sig-name descname"><span class="pre">check_throttles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.check_throttles" title="Ссылка на это определение"></a></dt>
+<dd><p>Check if request should be throttled.
+Raises an appropriate exception if the request is throttled.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.SignupView.content_negotiation_class">
+<span class="sig-name descname"><span class="pre">content_negotiation_class</span></span><a class="headerlink" href="#auth.views.SignupView.content_negotiation_class" title="Ссылка на это определение"></a></dt>
+<dd><p>псевдоним для <code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultContentNegotiation</span></code></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="auth.views.SignupView.default_response_headers">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_response_headers</span></span><a class="headerlink" href="#auth.views.SignupView.default_response_headers" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.determine_version">
+<span class="sig-name descname"><span class="pre">determine_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.determine_version" title="Ссылка на это определение"></a></dt>
+<dd><p>If versioning is being used, then determine any API version for the
+incoming request. Returns a two-tuple of (version, versioning_scheme)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.dispatch">
+<span class="sig-name descname"><span class="pre">dispatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.dispatch" title="Ссылка на это определение"></a></dt>
+<dd><p><cite>.dispatch()</cite> is pretty much the same as Django’s regular dispatch,
+but with extra hooks for startup, finalize, and exception handling.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.finalize_response">
+<span class="sig-name descname"><span class="pre">finalize_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.finalize_response" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns the final response object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.get_authenticate_header">
+<span class="sig-name descname"><span class="pre">get_authenticate_header</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.get_authenticate_header" title="Ссылка на это определение"></a></dt>
+<dd><p>If a request is unauthenticated, determine the WWW-Authenticate
+header to use for 401 responses, if any.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.get_authenticators">
+<span class="sig-name descname"><span class="pre">get_authenticators</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.get_authenticators" title="Ссылка на это определение"></a></dt>
+<dd><p>Instantiates and returns the list of authenticators that this view can use.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.get_content_negotiator">
+<span class="sig-name descname"><span class="pre">get_content_negotiator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.get_content_negotiator" title="Ссылка на это определение"></a></dt>
+<dd><p>Instantiate and return the content negotiation class to use.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.get_exception_handler">
+<span class="sig-name descname"><span class="pre">get_exception_handler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.get_exception_handler" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns the exception handler that this view uses.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.get_exception_handler_context">
+<span class="sig-name descname"><span class="pre">get_exception_handler_context</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.get_exception_handler_context" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns a dict that is passed through to EXCEPTION_HANDLER,
+as the <cite>context</cite> argument.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.get_format_suffix">
+<span class="sig-name descname"><span class="pre">get_format_suffix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.get_format_suffix" title="Ссылка на это определение"></a></dt>
+<dd><p>Determine if the request includes a „.json“ style format suffix</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.get_parser_context">
+<span class="sig-name descname"><span class="pre">get_parser_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">http_request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.get_parser_context" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns a dict that is passed through to Parser.parse(),
+as the <cite>parser_context</cite> keyword argument.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.get_parsers">
+<span class="sig-name descname"><span class="pre">get_parsers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.get_parsers" title="Ссылка на это определение"></a></dt>
+<dd><p>Instantiates and returns the list of parsers that this view can use.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.get_permissions">
+<span class="sig-name descname"><span class="pre">get_permissions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.get_permissions" title="Ссылка на это определение"></a></dt>
+<dd><p>Instantiates and returns the list of permissions that this view requires.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.get_renderer_context">
+<span class="sig-name descname"><span class="pre">get_renderer_context</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.get_renderer_context" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns a dict that is passed through to Renderer.render(),
+as the <cite>renderer_context</cite> keyword argument.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.get_renderers">
+<span class="sig-name descname"><span class="pre">get_renderers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.get_renderers" title="Ссылка на это определение"></a></dt>
+<dd><p>Instantiates and returns the list of renderers that this view can use.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.get_throttles">
+<span class="sig-name descname"><span class="pre">get_throttles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.get_throttles" title="Ссылка на это определение"></a></dt>
+<dd><p>Instantiates and returns the list of throttles that this view uses.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.get_view_description">
+<span class="sig-name descname"><span class="pre">get_view_description</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">html</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.get_view_description" title="Ссылка на это определение"></a></dt>
+<dd><p>Return some descriptive text for the view, as used in OPTIONS responses
+and in the browsable API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.get_view_name">
+<span class="sig-name descname"><span class="pre">get_view_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.get_view_name" title="Ссылка на это определение"></a></dt>
+<dd><p>Return the view name, as used in OPTIONS responses and in the
+browsable API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.handle_exception">
+<span class="sig-name descname"><span class="pre">handle_exception</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.handle_exception" title="Ссылка на это определение"></a></dt>
+<dd><p>Handle any exception that occurs, by returning an appropriate response,
+or re-raising the error.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.SignupView.http_method_names">
+<span class="sig-name descname"><span class="pre">http_method_names</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['get',</span> <span class="pre">'post',</span> <span class="pre">'put',</span> <span class="pre">'patch',</span> <span class="pre">'delete',</span> <span class="pre">'head',</span> <span class="pre">'options',</span> <span class="pre">'trace']</span></em><a class="headerlink" href="#auth.views.SignupView.http_method_names" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.http_method_not_allowed">
+<span class="sig-name descname"><span class="pre">http_method_not_allowed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.http_method_not_allowed" title="Ссылка на это определение"></a></dt>
+<dd><p>If <cite>request.method</cite> does not correspond to a handler method,
+determine what kind of exception to raise.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.initial">
+<span class="sig-name descname"><span class="pre">initial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.initial" title="Ссылка на это определение"></a></dt>
+<dd><p>Runs anything that needs to occur prior to calling the method handler.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.initialize_request">
+<span class="sig-name descname"><span class="pre">initialize_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.initialize_request" title="Ссылка на это определение"></a></dt>
+<dd><p>Returns the initial request object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.SignupView.metadata_class">
+<span class="sig-name descname"><span class="pre">metadata_class</span></span><a class="headerlink" href="#auth.views.SignupView.metadata_class" title="Ссылка на это определение"></a></dt>
+<dd><p>псевдоним для <code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleMetadata</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.options">
+<span class="sig-name descname"><span class="pre">options</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.options" title="Ссылка на это определение"></a></dt>
+<dd><p>Handler method for HTTP „OPTIONS“ request.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.SignupView.parser_classes">
+<span class="sig-name descname"><span class="pre">parser_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework.parsers.JSONParser'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.parsers.FormParser'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.parsers.MultiPartParser'&gt;]</span></em><a class="headerlink" href="#auth.views.SignupView.parser_classes" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.perform_authentication">
+<span class="sig-name descname"><span class="pre">perform_authentication</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.perform_authentication" title="Ссылка на это определение"></a></dt>
+<dd><p>Perform authentication on the incoming request.</p>
+<p>Note that if you override this and simply „pass“, then authentication
+will instead be performed lazily, the first time either
+<cite>request.user</cite> or <cite>request.auth</cite> is accessed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.perform_content_negotiation">
+<span class="sig-name descname"><span class="pre">perform_content_negotiation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.perform_content_negotiation" title="Ссылка на это определение"></a></dt>
+<dd><p>Determine which renderer and media type to use render the response.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.SignupView.permission_classes">
+<span class="sig-name descname"><span class="pre">permission_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework.permissions.AllowAny'&gt;]</span></em><a class="headerlink" href="#auth.views.SignupView.permission_classes" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.permission_denied">
+<span class="sig-name descname"><span class="pre">permission_denied</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.permission_denied" title="Ссылка на это определение"></a></dt>
+<dd><p>If request is not permitted, determine what kind of exception to raise.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.post">
+<span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/auth/views.html#SignupView.post"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#auth.views.SignupView.post" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.raise_uncaught_exception">
+<span class="sig-name descname"><span class="pre">raise_uncaught_exception</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.raise_uncaught_exception" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.SignupView.renderer_classes">
+<span class="sig-name descname"><span class="pre">renderer_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;class</span> <span class="pre">'rest_framework.renderers.JSONRenderer'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'rest_framework.renderers.BrowsableAPIRenderer'&gt;]</span></em><a class="headerlink" href="#auth.views.SignupView.renderer_classes" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.SignupView.schema">
+<span class="sig-name descname"><span class="pre">schema</span></span><a class="headerlink" href="#auth.views.SignupView.schema" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.SignupView.settings">
+<span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;rest_framework.settings.APISettings</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#auth.views.SignupView.settings" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.setup" title="Ссылка на это определение"></a></dt>
+<dd><p>Initialize attributes shared by all view methods.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.SignupView.throttle_classes">
+<span class="sig-name descname"><span class="pre">throttle_classes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#auth.views.SignupView.throttle_classes" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="auth.views.SignupView.throttled">
+<span class="sig-name descname"><span class="pre">throttled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#auth.views.SignupView.throttled" title="Ссылка на это определение"></a></dt>
+<dd><p>If request is throttled, determine what kind of exception to raise.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.SignupView.versioning_class">
+<span class="sig-name descname"><span class="pre">versioning_class</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#auth.views.SignupView.versioning_class" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="auth.views.SignupView.view_is_async">
+<span class="sig-name descname"><span class="pre">view_is_async</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#auth.views.SignupView.view_is_async" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-auth">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-auth" title="Ссылка на этот заголовок"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="modules.html" class="btn btn-neutral float-left" title="modules" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="main.html" class="btn btn-neutral float-right" title="Пользователи" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, Igor K.. </p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

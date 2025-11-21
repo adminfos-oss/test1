@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>rest_framework.settings &mdash; документация iShop 1.0.1</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=472891ee"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/translations.js?v=cd1d70c9"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            iShop
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">modules</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Индексы</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../genindex.html">Алфавитный указатель</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../py-modindex.html">Состав модуля</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../search.html">Поиск</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">iShop</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Код модуля</a></li>
+      <li class="breadcrumb-item active">rest_framework.settings</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Исходный код rest_framework.settings</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Settings for REST framework are all namespaced in the REST_FRAMEWORK setting.</span>
+<span class="sd">For example your project&#39;s `settings.py` file might look like this:</span>
+
+<span class="sd">REST_FRAMEWORK = {</span>
+<span class="sd">    &#39;DEFAULT_RENDERER_CLASSES&#39;: [</span>
+<span class="sd">        &#39;rest_framework.renderers.JSONRenderer&#39;,</span>
+<span class="sd">        &#39;rest_framework.renderers.TemplateHTMLRenderer&#39;,</span>
+<span class="sd">    ],</span>
+<span class="sd">    &#39;DEFAULT_PARSER_CLASSES&#39;: [</span>
+<span class="sd">        &#39;rest_framework.parsers.JSONParser&#39;,</span>
+<span class="sd">        &#39;rest_framework.parsers.FormParser&#39;,</span>
+<span class="sd">        &#39;rest_framework.parsers.MultiPartParser&#39;,</span>
+<span class="sd">    ],</span>
+<span class="sd">}</span>
+
+<span class="sd">This module provides the `api_setting` object, that is used to access</span>
+<span class="sd">REST framework settings, checking for user settings first, then falling</span>
+<span class="sd">back to the defaults.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.conf</span><span class="w"> </span><span class="kn">import</span> <span class="n">settings</span>
+<span class="c1"># Import from `django.core.signals` instead of the official location</span>
+<span class="c1"># `django.test.signals` to avoid importing the test module unnecessarily.</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.core.signals</span><span class="w"> </span><span class="kn">import</span> <span class="n">setting_changed</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.utils.module_loading</span><span class="w"> </span><span class="kn">import</span> <span class="n">import_string</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">rest_framework</span><span class="w"> </span><span class="kn">import</span> <span class="n">ISO_8601</span>
+
+<span class="n">DEFAULTS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># Base API policies</span>
+    <span class="s1">&#39;DEFAULT_RENDERER_CLASSES&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;rest_framework.renderers.JSONRenderer&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;rest_framework.renderers.BrowsableAPIRenderer&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;DEFAULT_PARSER_CLASSES&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;rest_framework.parsers.JSONParser&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;rest_framework.parsers.FormParser&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;rest_framework.parsers.MultiPartParser&#39;</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;DEFAULT_AUTHENTICATION_CLASSES&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;rest_framework.authentication.SessionAuthentication&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;rest_framework.authentication.BasicAuthentication&#39;</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;DEFAULT_PERMISSION_CLASSES&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;rest_framework.permissions.AllowAny&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;DEFAULT_THROTTLE_CLASSES&#39;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s1">&#39;DEFAULT_CONTENT_NEGOTIATION_CLASS&#39;</span><span class="p">:</span> <span class="s1">&#39;rest_framework.negotiation.DefaultContentNegotiation&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;DEFAULT_METADATA_CLASS&#39;</span><span class="p">:</span> <span class="s1">&#39;rest_framework.metadata.SimpleMetadata&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;DEFAULT_VERSIONING_CLASS&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+
+    <span class="c1"># Generic view behavior</span>
+    <span class="s1">&#39;DEFAULT_PAGINATION_CLASS&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="s1">&#39;DEFAULT_FILTER_BACKENDS&#39;</span><span class="p">:</span> <span class="p">[],</span>
+
+    <span class="c1"># Schema</span>
+    <span class="s1">&#39;DEFAULT_SCHEMA_CLASS&#39;</span><span class="p">:</span> <span class="s1">&#39;rest_framework.schemas.openapi.AutoSchema&#39;</span><span class="p">,</span>
+
+    <span class="c1"># Throttling</span>
+    <span class="s1">&#39;DEFAULT_THROTTLE_RATES&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;anon&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;NUM_PROXIES&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+
+    <span class="c1"># Pagination</span>
+    <span class="s1">&#39;PAGE_SIZE&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+
+    <span class="c1"># Filtering</span>
+    <span class="s1">&#39;SEARCH_PARAM&#39;</span><span class="p">:</span> <span class="s1">&#39;search&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ORDERING_PARAM&#39;</span><span class="p">:</span> <span class="s1">&#39;ordering&#39;</span><span class="p">,</span>
+
+    <span class="c1"># Versioning</span>
+    <span class="s1">&#39;DEFAULT_VERSION&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="s1">&#39;ALLOWED_VERSIONS&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="s1">&#39;VERSION_PARAM&#39;</span><span class="p">:</span> <span class="s1">&#39;version&#39;</span><span class="p">,</span>
+
+    <span class="c1"># Authentication</span>
+    <span class="s1">&#39;UNAUTHENTICATED_USER&#39;</span><span class="p">:</span> <span class="s1">&#39;django.contrib.auth.models.AnonymousUser&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;UNAUTHENTICATED_TOKEN&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+
+    <span class="c1"># View configuration</span>
+    <span class="s1">&#39;VIEW_NAME_FUNCTION&#39;</span><span class="p">:</span> <span class="s1">&#39;rest_framework.views.get_view_name&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;VIEW_DESCRIPTION_FUNCTION&#39;</span><span class="p">:</span> <span class="s1">&#39;rest_framework.views.get_view_description&#39;</span><span class="p">,</span>
+
+    <span class="c1"># Exception handling</span>
+    <span class="s1">&#39;EXCEPTION_HANDLER&#39;</span><span class="p">:</span> <span class="s1">&#39;rest_framework.views.exception_handler&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;NON_FIELD_ERRORS_KEY&#39;</span><span class="p">:</span> <span class="s1">&#39;non_field_errors&#39;</span><span class="p">,</span>
+
+    <span class="c1"># Testing</span>
+    <span class="s1">&#39;TEST_REQUEST_RENDERER_CLASSES&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;rest_framework.renderers.MultiPartRenderer&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;rest_framework.renderers.JSONRenderer&#39;</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;TEST_REQUEST_DEFAULT_FORMAT&#39;</span><span class="p">:</span> <span class="s1">&#39;multipart&#39;</span><span class="p">,</span>
+
+    <span class="c1"># Hyperlink settings</span>
+    <span class="s1">&#39;URL_FORMAT_OVERRIDE&#39;</span><span class="p">:</span> <span class="s1">&#39;format&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;FORMAT_SUFFIX_KWARG&#39;</span><span class="p">:</span> <span class="s1">&#39;format&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;URL_FIELD_NAME&#39;</span><span class="p">:</span> <span class="s1">&#39;url&#39;</span><span class="p">,</span>
+
+    <span class="c1"># Input and output formats</span>
+    <span class="s1">&#39;DATE_FORMAT&#39;</span><span class="p">:</span> <span class="n">ISO_8601</span><span class="p">,</span>
+    <span class="s1">&#39;DATE_INPUT_FORMATS&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">ISO_8601</span><span class="p">],</span>
+
+    <span class="s1">&#39;DATETIME_FORMAT&#39;</span><span class="p">:</span> <span class="n">ISO_8601</span><span class="p">,</span>
+    <span class="s1">&#39;DATETIME_INPUT_FORMATS&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">ISO_8601</span><span class="p">],</span>
+
+    <span class="s1">&#39;TIME_FORMAT&#39;</span><span class="p">:</span> <span class="n">ISO_8601</span><span class="p">,</span>
+    <span class="s1">&#39;TIME_INPUT_FORMATS&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">ISO_8601</span><span class="p">],</span>
+
+    <span class="c1"># Encoding</span>
+    <span class="s1">&#39;UNICODE_JSON&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;COMPACT_JSON&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;STRICT_JSON&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;COERCE_DECIMAL_TO_STRING&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;UPLOADED_FILES_USE_URL&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+
+    <span class="c1"># Browsable API</span>
+    <span class="s1">&#39;HTML_SELECT_CUTOFF&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+    <span class="s1">&#39;HTML_SELECT_CUTOFF_TEXT&#39;</span><span class="p">:</span> <span class="s2">&quot;More than </span><span class="si">{count}</span><span class="s2"> items...&quot;</span><span class="p">,</span>
+
+    <span class="c1"># Schemas</span>
+    <span class="s1">&#39;SCHEMA_COERCE_PATH_PK&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;SCHEMA_COERCE_METHOD_NAMES&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;retrieve&#39;</span><span class="p">:</span> <span class="s1">&#39;read&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;destroy&#39;</span><span class="p">:</span> <span class="s1">&#39;delete&#39;</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+
+
+<span class="c1"># List of settings that may be in string import notation.</span>
+<span class="n">IMPORT_STRINGS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;DEFAULT_RENDERER_CLASSES&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;DEFAULT_PARSER_CLASSES&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;DEFAULT_AUTHENTICATION_CLASSES&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;DEFAULT_PERMISSION_CLASSES&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;DEFAULT_THROTTLE_CLASSES&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;DEFAULT_CONTENT_NEGOTIATION_CLASS&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;DEFAULT_METADATA_CLASS&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;DEFAULT_VERSIONING_CLASS&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;DEFAULT_PAGINATION_CLASS&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;DEFAULT_FILTER_BACKENDS&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;DEFAULT_SCHEMA_CLASS&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;EXCEPTION_HANDLER&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;TEST_REQUEST_RENDERER_CLASSES&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;UNAUTHENTICATED_USER&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;UNAUTHENTICATED_TOKEN&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;VIEW_NAME_FUNCTION&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;VIEW_DESCRIPTION_FUNCTION&#39;</span>
+<span class="p">]</span>
+
+
+<span class="c1"># List of settings that have been removed</span>
+<span class="n">REMOVED_SETTINGS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;PAGINATE_BY&#39;</span><span class="p">,</span> <span class="s1">&#39;PAGINATE_BY_PARAM&#39;</span><span class="p">,</span> <span class="s1">&#39;MAX_PAGINATE_BY&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">perform_import</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">setting_name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    If the given setting is a string import notation,</span>
+<span class="sd">    then perform the necessary import or imports.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">import_from_string</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">setting_name</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">import_from_string</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">setting_name</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">val</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">val</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">import_from_string</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">setting_name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Attempt to import a class from a string representation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">import_string</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Could not import &#39;</span><span class="si">%s</span><span class="s2">&#39; for API setting &#39;</span><span class="si">%s</span><span class="s2">&#39;. </span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">setting_name</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">APISettings</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A settings object that allows REST Framework settings to be accessed as</span>
+<span class="sd">    properties. For example:</span>
+
+<span class="sd">        from rest_framework.settings import api_settings</span>
+<span class="sd">        print(api_settings.DEFAULT_RENDERER_CLASSES)</span>
+
+<span class="sd">    Any setting with string import paths will be automatically resolved</span>
+<span class="sd">    and return the class, rather than the string literal.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">    This is an internal class that is only compatible with settings namespaced</span>
+<span class="sd">    under the REST_FRAMEWORK name. It is not intended to be used by 3rd-party</span>
+<span class="sd">    apps, and test helpers like `override_settings` may not work as expected.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_settings</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">defaults</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">import_strings</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">user_settings</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_user_settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__check_user_settings</span><span class="p">(</span><span class="n">user_settings</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span> <span class="o">=</span> <span class="n">defaults</span> <span class="ow">or</span> <span class="n">DEFAULTS</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">import_strings</span> <span class="o">=</span> <span class="n">import_strings</span> <span class="ow">or</span> <span class="n">IMPORT_STRINGS</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cached_attrs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">user_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_user_settings&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_user_settings</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s1">&#39;REST_FRAMEWORK&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_settings</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">attr</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;Invalid API setting: &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">attr</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Check if present in user settings</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_settings</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="c1"># Fall back to defaults</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaults</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span>
+
+        <span class="c1"># Coerce import strings into classes</span>
+        <span class="k">if</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">import_strings</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">perform_import</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+
+        <span class="c1"># Cache the result</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cached_attrs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">val</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__check_user_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_settings</span><span class="p">):</span>
+        <span class="n">SETTINGS_DOC</span> <span class="o">=</span> <span class="s2">&quot;https://www.django-rest-framework.org/api-guide/settings/&quot;</span>
+        <span class="k">for</span> <span class="n">setting</span> <span class="ow">in</span> <span class="n">REMOVED_SETTINGS</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">setting</span> <span class="ow">in</span> <span class="n">user_settings</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;The &#39;</span><span class="si">%s</span><span class="s2">&#39; setting has been removed. Please refer to &#39;</span><span class="si">%s</span><span class="s2">&#39; for available settings.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">setting</span><span class="p">,</span> <span class="n">SETTINGS_DOC</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">user_settings</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">reload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_attrs</span><span class="p">:</span>
+            <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cached_attrs</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_user_settings&#39;</span><span class="p">):</span>
+            <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_user_settings&#39;</span><span class="p">)</span>
+
+
+<span class="n">api_settings</span> <span class="o">=</span> <span class="n">APISettings</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">DEFAULTS</span><span class="p">,</span> <span class="n">IMPORT_STRINGS</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">reload_api_settings</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">setting</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;setting&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">setting</span> <span class="o">==</span> <span class="s1">&#39;REST_FRAMEWORK&#39;</span><span class="p">:</span>
+        <span class="n">api_settings</span><span class="o">.</span><span class="n">reload</span><span class="p">()</span>
+
+
+<span class="n">setting_changed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">reload_api_settings</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, Igor K.. </p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

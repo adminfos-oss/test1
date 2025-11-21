@@ -1,0 +1,82 @@
+[project]
+name = "f-app1"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Igor K.",email = "adminfos@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "black (>=25.11.0,<26.0.0)",
+    "flake8 (>=7.3.0,<8.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.black]
+line-length = 100
+target-version = ['py313']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | migrations
+  | myHelp
+)/
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 100
+known_first_party = ["main", "auth", "products", "orders", "cart"]
+
+[tool.flake8]
+max-line-length = 100
+ignore = "E203,W503,E501"
+exclude = [
+    ".git",
+    "__pycache__",
+    "migrations",
+    "myHelp",
+    "venv",
+    ".venv",
+    "build",
+    "dist"
+]
+
+per-file-ignores = [
+    "__init__.py:F401",
+]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "f_app.settings"
+python_files = ["test_*.py", "tests.py"]
+python_classes = "Test*"
+python_functions = "test_*"
+addopts = "-ra -q --ff --tb=short --strict-markers"
+markers = [
+    "slow: marks tests as slow",
+    "serial",
+]
+[dependency-groups]
+dev = [
+    "pytest-django (>=4.11.1,<5.0.0)",
+    "model-bakery (>=1.20.5,<2.0.0)",
+    "flake8 (>=7.3.0,<8.0.0)",
+    "black (>=25.11.0,<26.0.0)"
+]
