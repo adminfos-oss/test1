@@ -13,7 +13,7 @@
 - **Black** + **flake8** — автоматическое форматирование и линтинг
 - **pytest** + **pytest-django** — [покрытие тестами](#Pytest) models, views, serializers
 - **Логирование** через стандартный модуль `logging` 
-- **[Полная документация](docs/build/html/products.html#module-products.models)** сгенерирована через **Sphinx** 
+- **Полная документация** сгенерирована через **Sphinx** 
 - Swagger UI и ReDoc для API-документации
 
 ## Архитектура проекта
