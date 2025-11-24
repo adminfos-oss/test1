@@ -1,8 +1,0 @@
-INFO 2025-11-20 18:53:47,068 views 13516 4904 LIST request | view=ProductViewSet | user=Anonymous (id=None) | ip=127.0.0.1 | total_products=8 | 
-INFO 2025-11-20 18:54:16,955 views 13516 4904 LIST request | view=ProductViewSet | user=Anonymous (id=None) | ip=127.0.0.1 | total_products=8 | 
-INFO 2025-11-21 13:36:08,146 views 18716 10424 LIST request | view=ProductViewSet | user=Anonymous (id=None) | ip=127.0.0.1 | total_products=5 | 
-INFO 2025-11-21 13:38:20,729 views 5928 17476 LIST request | view=ProductViewSet | user=Anonymous (id=None) | ip=127.0.0.1 | total_products=5 | 
-INFO 2025-11-21 14:02:57,802 views 4132 16256 LIST request | view=ProductViewSet | user=Anonymous (id=None) | ip=127.0.0.1 | total_products=5 | 
-INFO 2025-11-21 15:15:37,169 views 17624 4132 LIST request | view=ProductViewSet | user=Anonymous (id=None) | ip=127.0.0.1 | total_products=5 | 
-INFO 2025-11-21 15:17:39,208 views 10968 8936 LIST request | view=ProductViewSet | user=Anonymous (id=None) | ip=127.0.0.1 | total_products=5 | 
-INFO 2025-11-21 17:00:12,541 views 15476 19360 LIST request | view=ProductViewSet | user=Anonymous (id=None) | ip=127.0.0.1 | total_products=5 | 
